@@ -1,0 +1,1313 @@
+definitions:
+  account.Account:
+    properties:
+      created_at:
+        description: 创建时间
+        type: integer
+      deleted_at:
+        description: 删除时间
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      id:
+        description: 自增主键
+        type: integer
+      mobile:
+        description: 手机号
+        type: string
+      role:
+        allOf:
+        - $ref: '#/definitions/common.Role'
+        description: 角色
+      status:
+        allOf:
+        - $ref: '#/definitions/common.Status'
+        description: 状态
+      updated_at:
+        description: 更新时间
+        type: integer
+      username:
+        description: |-
+          用户名
+          uniqueIndex:idx_deleted_at: 唯一索引, 避免软删除的数据重复
+        type: string
+    type: object
+  account.Accounts:
+    properties:
+      items:
+        description: 用户列表
+        items:
+          $ref: '#/definitions/account.Account'
+        type: array
+      total:
+        description: 总数
+        type: integer
+    type: object
+  account.ChangeEmailRequest:
+    properties:
+      email:
+        description: 新邮箱
+        type: string
+      security_code:
+        description: 安全码
+        type: string
+    required:
+    - email
+    - security_code
+    type: object
+  account.ChangeMobileRequest:
+    properties:
+      mobile:
+        description: 新手机号
+        type: string
+      security_code:
+        description: 安全码
+        type: string
+    required:
+    - mobile
+    - security_code
+    type: object
+  account.ChangePasswordRequest:
+    properties:
+      password:
+        description: 新密码
+        type: string
+      security_code:
+        description: 安全码
+        type: string
+    required:
+    - password
+    - security_code
+    type: object
+  account.CreateRequest:
+    properties:
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        maxLength: 24
+        minLength: 3
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  audit.LastLoginDetailRequest:
+    properties:
+      device_id:
+        description: 设备id
+        type: string
+      device_name:
+        description: 设备名称
+        type: string
+      user_agent:
+        description: 用户客户端
+        type: string
+    required:
+    - device_id
+    - device_name
+    - user_agent
+    type: object
+  captcha.VerifyEmailCodeRequest:
+    properties:
+      code:
+        description: 验证码
+        type: string
+    required:
+    - code
+    type: object
+  captcha.VerifyEmailCodeResponse:
+    properties:
+      ok:
+        description: 是否验证成功
+        type: boolean
+      ttl:
+        description: 剩余时间
+        type: integer
+    type: object
+  captcha.VerifyMobileCodeRequest:
+    properties:
+      code:
+        description: 验证码
+        type: string
+    required:
+    - code
+    type: object
+  captcha.VerifyMobileCodeResponse:
+    properties:
+      ok:
+        description: 是否验证成功
+        type: boolean
+      ttl:
+        description: 剩余时间
+        type: integer
+    type: object
+  channal.Channal:
+    properties:
+      account_id:
+        description: 账户Id
+        type: integer
+      api_key:
+        description: ApiKey
+        type: string
+      created_at:
+        description: 创建时间
+        type: integer
+      description:
+        description: 通道描述
+        type: string
+      id:
+        description: 消息Id
+        type: string
+      limiter:
+        description: 限速器
+      limiter_type:
+        description: 限速器类型
+        type: string
+      name:
+        description: 通道名称
+        type: string
+      provider:
+        description: 供应商
+      provider_type:
+        description: 供应商类型
+        type: string
+      secret:
+        description: 密钥
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/channal.Status'
+        description: 通道状态
+      updated_at:
+        description: 更新时间
+        type: integer
+    type: object
+  channal.Channels:
+    properties:
+      items:
+        description: 通道列表
+        items:
+          $ref: '#/definitions/channal.Channal'
+        type: array
+      total:
+        description: 总数
+        type: integer
+    type: object
+  channal.CreateRequest:
+    properties:
+      description:
+        description: 通道描述
+        type: string
+      limiter:
+        description: |-
+          限速器
+          sliding_window: {"window":0, "limit":0}
+          token_bucket: {"capacity":0, "rate":0}
+        type: string
+      limiter_type:
+        description: 限速器类型
+        enum:
+        - sliding_window
+        - token_bucket
+        type: string
+      name:
+        description: 通道名称
+        type: string
+      provider:
+        description: |-
+          供应商
+          email: {"from":"", "smtp_server":"", "smtp_port":0, "smtp_username":"", "smtp_password":""}
+          dingtalk: {"webhook":"", "secret":""}
+          lark: {"webhook":"", "secret":""}
+          telegram: {"token":"", "chat_id":""}
+        type: string
+      provider_type:
+        description: 供应商类型
+        enum:
+        - email
+        - dingtalk
+        - lark
+        - telegram
+        type: string
+      sign:
+        description: 是否加签
+        type: boolean
+    required:
+    - name
+    - provider
+    - provider_type
+    type: object
+  channal.CreateResponse:
+    properties:
+      api_key:
+        type: string
+      secret:
+        type: string
+    type: object
+  channal.Status:
+    enum:
+    - normal
+    - disabled
+    type: string
+    x-enum-varnames:
+    - StatusNormal
+    - StatusDisabled
+  common.Role:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - RoleUser
+    - RoleAdmin
+  common.Status:
+    enum:
+    - 1
+    - 2
+    - 3
+    type: integer
+    x-enum-varnames:
+    - StatusNormal
+    - StatusDisabled
+    - StatusDeleted
+  device.BindRequest:
+    properties:
+      account_id:
+        description: 账户id
+        type: string
+      device_id:
+        description: 设备id
+        type: string
+      name:
+        description: 设备名称
+        type: string
+      type:
+        description: 设备类型
+        type: string
+    required:
+    - account_id
+    - device_id
+    - name
+    - type
+    type: object
+  device.ChangeRequest:
+    properties:
+      account_id:
+        description: 账户id
+        type: string
+      device_id:
+        description: 设备id
+        type: string
+      name:
+        description: 设备名称
+        type: string
+      type:
+        description: 设备类型
+        type: string
+    required:
+    - account_id
+    - device_id
+    - name
+    - type
+    type: object
+  device.UnbindRequest:
+    properties:
+      account_id:
+        description: 账户id
+        type: string
+      device_id:
+        description: 设备id
+        type: string
+    required:
+    - account_id
+    - device_id
+    type: object
+  google.GenerateResponse:
+    properties:
+      qr_code:
+        description: 二维码base64
+        type: string
+      secret:
+        description: 谷歌验证器密钥
+        type: string
+    type: object
+  google.ValidateRequest:
+    properties:
+      code:
+        description: 谷歌验证码
+        type: string
+    required:
+    - code
+    type: object
+  google.ValidateResponse:
+    properties:
+      ok:
+        description: 是否验证通过
+        type: boolean
+      security_code:
+        description: 安全码
+        type: string
+    type: object
+  jwt.Jwt:
+    properties:
+      access_token:
+        description: 访问令牌
+        type: string
+      refresh_token:
+        description: 刷新令牌
+        type: string
+    type: object
+  jwt.KickRequest:
+    properties:
+      username:
+        description: 用户名
+        type: string
+    required:
+    - username
+    type: object
+  jwt.LoginRequest:
+    properties:
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  jwt.LogoutRequest:
+    properties:
+      refresh_token:
+        description: 刷新令牌
+        type: string
+    required:
+    - refresh_token
+    type: object
+  jwt.RefreshRequest:
+    properties:
+      refresh_token:
+        description: 刷新令牌
+        type: string
+    required:
+    - refresh_token
+    type: object
+  message.Body:
+    properties:
+      content:
+        description: 正文
+        type: string
+      encrypted_content:
+        description: 加密正文, 仅在账户控制台可查看
+        type: string
+      level:
+        description: 等级
+        type: string
+      title:
+        description: 标题
+        type: string
+      type:
+        description: 类型
+        type: string
+    type: object
+  message.ChangeStatusRequest:
+    properties:
+      id:
+        description: id
+        type: string
+      status:
+        description: 状态
+        enum:
+        - pending
+        - success
+        - failure
+        type: string
+    required:
+    - id
+    type: object
+  message.CreateRequest:
+    properties:
+      content:
+        description: 消息内容
+        type: string
+      encrypted_content:
+        description: 加密消息内容, 仅在账户控制台可查看
+        type: string
+      level:
+        description: 消息等级
+        enum:
+        - info
+        - warning
+        - critical
+        type: string
+      title:
+        description: 消息标题
+        type: string
+      type:
+        description: 消息类型
+        enum:
+        - text
+        - markdown
+        type: string
+    required:
+    - content
+    type: object
+  message.Message:
+    properties:
+      _id:
+        description: 消息Id
+        type: string
+      account_id:
+        description: 账户Id
+        type: integer
+      body:
+        allOf:
+        - $ref: '#/definitions/message.Body'
+        description: 消息体
+      channel_api_key:
+        description: 通道ApiKey
+        type: string
+      created_at:
+        description: 创建时间
+        type: integer
+      payload:
+        description: 附加信息
+        type: string
+      status:
+        description: 状态
+        type: string
+      updated_at:
+        description: 更新时间
+        type: integer
+    type: object
+  message.Messages:
+    properties:
+      items:
+        description: 消息列表
+        items:
+          $ref: '#/definitions/message.Message'
+        type: array
+      total:
+        description: 总数
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /account:
+    get:
+      consumes:
+      - application/json
+      description: 获取账户列表
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: size
+        type: integer
+      - description: 状态
+        enum:
+        - 1
+        - 2
+        - 3
+        in: query
+        name: status
+        type: integer
+        x-enum-varnames:
+        - StatusNormal
+        - StatusDisabled
+        - StatusDeleted
+      - description: 用户名
+        in: query
+        name: username
+        type: string
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account.Accounts'
+      summary: 账户列表
+      tags:
+      - account
+    post:
+      consumes:
+      - application/json
+      description: 账户创建
+      parameters:
+      - description: 账户创建请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/account.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户创建
+      tags:
+      - account
+  /account/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 账户删除
+      parameters:
+      - description: 用户id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户删除
+      tags:
+      - account
+  /account/change/email:
+    put:
+      consumes:
+      - application/json
+      description: 账户修改邮箱
+      parameters:
+      - description: 账户修改邮箱请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/account.ChangeEmailRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户修改邮箱
+      tags:
+      - account
+  /account/change/mobile:
+    put:
+      consumes:
+      - application/json
+      description: 账户修改手机号
+      parameters:
+      - description: 账户修改手机号请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/account.ChangeMobileRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户修改手机号
+      tags:
+      - account
+  /account/change/password:
+    put:
+      consumes:
+      - application/json
+      description: 账户修改密码
+      parameters:
+      - description: 账户修改密码请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/account.ChangePasswordRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户修改密码
+      tags:
+      - account
+  /account/detail:
+    get:
+      consumes:
+      - application/json
+      description: 获取账户详情
+      parameters:
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account.Account'
+      summary: 账户详情
+      tags:
+      - account
+  /auth/gotp/generate:
+    post:
+      consumes:
+      - application/json
+      description: 生成谷歌验证器密钥二维码base64
+      parameters:
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/google.GenerateResponse'
+      summary: 生成谷歌验证器密钥二维码base64
+      tags:
+      - auth
+  /auth/gotp/verify:
+    post:
+      consumes:
+      - application/json
+      description: 验证谷歌验证器
+      parameters:
+      - description: 验证请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/google.ValidateRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/google.ValidateResponse'
+      summary: 验证谷歌验证器
+      tags:
+      - auth
+  /auth/kick:
+    post:
+      consumes:
+      - application/json
+      description: 踢人下线
+      parameters:
+      - description: 踢人请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/jwt.KickRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 踢人下线
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 登录
+      parameters:
+      - description: 登录请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/jwt.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/jwt.Jwt'
+      summary: 登录
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: 登出
+      parameters:
+      - description: 登出请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/jwt.LogoutRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 登出
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 刷新令牌
+      parameters:
+      - description: 刷新请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/jwt.RefreshRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 刷新令牌
+      tags:
+      - auth
+  /notifier/channal:
+    get:
+      consumes:
+      - application/json
+      description: 查询通道
+      parameters:
+      - description: 创建时间
+        in: query
+        name: created_at
+        type: integer
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 供应商类型
+        enum:
+        - email
+        - dingtalk
+        - telegram
+        in: query
+        name: provider_type
+        type: string
+      - description: 每页数量
+        in: query
+        name: size
+        type: integer
+      - description: 通道状态
+        enum:
+        - normal
+        - disabled
+        in: query
+        name: status
+        type: string
+        x-enum-varnames:
+        - StatusNormal
+        - StatusDisabled
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/channal.Channels'
+      summary: 查询通道
+      tags:
+      - notifier
+    post:
+      consumes:
+      - application/json
+      description: 创建通道
+      parameters:
+      - description: 创建通道请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/channal.CreateRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/channal.CreateResponse'
+      summary: 创建通道
+      tags:
+      - notifier
+  /notifier/channal/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除通道
+      parameters:
+      - description: 通道Id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 删除通道
+      tags:
+      - notifier
+  /notifier/channal/detail:
+    get:
+      consumes:
+      - application/json
+      description: 查询通道
+      parameters:
+      - description: ApiKey
+        in: query
+        name: api_key
+        required: true
+        type: string
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/channal.Channal'
+      summary: 查询通道
+      tags:
+      - notifier
+  /notifier/message:
+    get:
+      consumes:
+      - application/json
+      description: 消息列表
+      parameters:
+      - description: 消息类型
+        in: query
+        name: created_at
+        type: integer
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 消息等级
+        in: query
+        name: level
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: size
+        type: integer
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/message.Messages'
+      summary: 消息列表
+      tags:
+      - notifier
+    put:
+      consumes:
+      - application/json
+      description: 更新消息状态
+      parameters:
+      - description: 更新消息状态请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/message.ChangeStatusRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 更新消息状态
+      tags:
+      - notifier
+  /notifier/message/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除消息
+      parameters:
+      - description: 消息id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 删除消息
+      tags:
+      - notifier
+  /notifier/message/send:
+    post:
+      consumes:
+      - application/json
+      description: 发送消息
+      parameters:
+      - in: query
+        name: api_key
+        required: true
+        type: string
+      - in: query
+        name: signature
+        type: string
+      - in: query
+        name: timestamp
+        type: integer
+      - description: 创建消息请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/message.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 发送消息
+      tags:
+      - notifier
+  /security/audit:
+    post:
+      consumes:
+      - application/json
+      description: 账户最近登录详情
+      parameters:
+      - description: 账户登录环境请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/audit.LastLoginDetailRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 账户最近登录详情
+      tags:
+      - security
+  /security/captcha/email/send:
+    post:
+      consumes:
+      - application/json
+      description: 发送邮箱验证码
+      parameters:
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 发送邮箱验证码
+      tags:
+      - security
+  /security/captcha/email/verify:
+    post:
+      consumes:
+      - application/json
+      description: 验证邮箱验证码
+      parameters:
+      - description: 验证邮箱验证码请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/captcha.VerifyEmailCodeRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/captcha.VerifyEmailCodeResponse'
+      summary: 验证邮箱验证码
+      tags:
+      - security
+  /security/captcha/mobile/send:
+    post:
+      consumes:
+      - application/json
+      description: 发送手机验证码
+      parameters:
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 发送手机验证码
+      tags:
+      - security
+  /security/captcha/mobile/verify:
+    post:
+      consumes:
+      - application/json
+      description: 验证手机验证码
+      parameters:
+      - description: 验证手机验证码请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/captcha.VerifyMobileCodeRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/captcha.VerifyMobileCodeResponse'
+      summary: 验证手机验证码
+      tags:
+      - security
+  /security/device:
+    get:
+      consumes:
+      - application/json
+      description: 设备列表
+      parameters:
+      - description: 账户id
+        in: query
+        name: account_id
+        type: string
+      - description: 设备id
+        in: query
+        name: device_id
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: size
+        type: integer
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 设备列表
+      tags:
+      - security
+  /security/device/bind:
+    post:
+      consumes:
+      - application/json
+      description: 设备绑定
+      parameters:
+      - description: 设备绑定请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/device.BindRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 设备绑定
+      tags:
+      - security
+  /security/device/change:
+    put:
+      consumes:
+      - application/json
+      description: 设备更换
+      parameters:
+      - description: 设备更换请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/device.ChangeRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 设备更换
+      tags:
+      - security
+  /security/device/unbind:
+    post:
+      consumes:
+      - application/json
+      description: 设备解绑
+      parameters:
+      - description: 设备解绑请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/device.UnbindRequest'
+      - description: Authorization Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 设备解绑
+      tags:
+      - security
+swagger: "2.0"

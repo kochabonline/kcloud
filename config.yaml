@@ -1,0 +1,20 @@
+http:
+  swagger:
+    enabled: true
+  health:
+    enabled: true
+  metrics:
+    enabled: true
+
+mysql:
+  database: kcloud
+  password: 12345678
+
+redis:
+  password: 12345678
+
+mongo:
+  password: 12345678
+
+jwt:
+  secret: 12345678
