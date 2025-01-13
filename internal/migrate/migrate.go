@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/apps/system/account"
+	"github.com/kochabonline/kcloud/apps/system/auth/google"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
 	"github.com/kochabonline/kcloud/apps/system/security/device"
 	"github.com/kochabonline/kit/core/crypto/bcrypt"
@@ -38,7 +39,7 @@ func (m *Migrate) Start() {
 
 // migrate 数据库迁移
 func (m *Migrate) migrate() {
-	tables := []any{account.Account{}, audit.Audit{}, device.Device{}}
+	tables := []any{account.Account{}, google.GoogleAuth{}, audit.Audit{}, device.Device{}}
 	if err := m.db.AutoMigrate(tables...); err != nil {
 		log.Fatalw("message", "自动迁移数据库失败", "error", err.Error())
 	}

@@ -5,6 +5,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/account"
 	"github.com/kochabonline/kcloud/apps/system/auth/google"
 	"github.com/kochabonline/kcloud/apps/system/auth/jwt"
+	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
@@ -21,4 +22,5 @@ var ProviderSet = wire.NewSet(
 	captcha.ProviderSet,
 	device.ProviderSet,
 	audit.ProviderSet,
+	menu.ProviderSet,
 )

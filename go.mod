@@ -3,7 +3,7 @@ module github.com/kochabonline/kcloud
 go 1.23.4
 
 require (
-	github.com/kochabonline/kit v0.0.0-20250112145758-762c6dc55fa9
+	github.com/kochabonline/kit v0.0.0-20250112154332-e505da631440
 	github.com/oschwald/geoip2-golang v1.11.0
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/segmentio/kafka-go v0.4.47
@@ -52,7 +52,7 @@ require (
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.23.0 // indirect
+	github.com/go-playground/validator/v10 v10.24.0 // indirect
 	github.com/goccy/go-json v0.10.4 // indirect
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0

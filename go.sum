@@ -61,6 +61,8 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.23.0 h1:/PwmTwZhS0dPkav3cdK9kV1FsAmrL8sThn8IHr/sO+o=
 github.com/go-playground/validator/v10 v10.23.0/go.mod h1:dbuPbCMFw/DrkbEynArYaCwl3amGuJotoKCe95atGMM=
+github.com/go-playground/validator/v10 v10.24.0 h1:KHQckvo8G6hlWnrPX4NJJ+aBfWNAE/HH+qdL2cBpCmg=
+github.com/go-playground/validator/v10 v10.24.0/go.mod h1:GGzBIJMuE98Ic/kJsBXbz1x/7cByt++cQ+YOuDM5wus=
 github.com/go-sql-driver/mysql v1.7.0/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
 github.com/go-sql-driver/mysql v1.8.1 h1:LedoTUt/eveggdHS9qUFC1EFSa8bU2+1pZjSRpvNJ1Y=
 github.com/go-sql-driver/mysql v1.8.1/go.mod h1:wEBSXgmK//2ZFJyE+qWnIsVGmvmEKlqwuVSjsCm7DZg=
@@ -111,6 +113,8 @@ github.com/kochabonline/kit v0.0.0-20250112141749-20c7f43e833f h1:QAuS5jaRQFlOMG
 github.com/kochabonline/kit v0.0.0-20250112141749-20c7f43e833f/go.mod h1:MNHJQaf8/tk+v30bUubVt74MR9fpx8ugabMKnHc6LSg=
 github.com/kochabonline/kit v0.0.0-20250112145758-762c6dc55fa9 h1:hERFUXhAMtyKT8CBHz11o0mD3I8jP02fI/Cuvqo3Ypg=
 github.com/kochabonline/kit v0.0.0-20250112145758-762c6dc55fa9/go.mod h1:MNHJQaf8/tk+v30bUubVt74MR9fpx8ugabMKnHc6LSg=
+github.com/kochabonline/kit v0.0.0-20250112154332-e505da631440 h1:NSncTtjfVd8tEwsLVWvmh9weIJh6R222UO9TULU/y30=
+github.com/kochabonline/kit v0.0.0-20250112154332-e505da631440/go.mod h1:WR/FUHHF5y4GYVxyoEA4aoDGArN7K3kN5y4fP2wfTtM=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=

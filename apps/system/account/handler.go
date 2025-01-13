@@ -46,6 +46,7 @@ func NewHandler(controller *Controller) *Handler {
 // @accept json
 // @produce json
 // @param request body CreateRequest true "账户创建请求"
+// @param token header string true "Authorization Token"
 // @success 200
 // @router /account [post]
 func (h *Handler) Create(c *gin.Context) {

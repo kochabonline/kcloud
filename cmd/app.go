@@ -7,6 +7,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/account"
 	"github.com/kochabonline/kcloud/apps/system/auth/google"
 	"github.com/kochabonline/kcloud/apps/system/auth/jwt"
+	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
@@ -36,6 +37,7 @@ func newApp(
 	captchaHandler *captcha.Handler,
 	deviceHandler *device.Handler,
 	auditHandler *audit.Handler,
+	menuHandler *menu.Handler,
 ) *app.App {
 	httpServer := server.NewHttpServer(
 		config, jwtController,
@@ -47,6 +49,7 @@ func newApp(
 		captchaHandler,
 		deviceHandler,
 		auditHandler,
+		menuHandler,
 	)
 
 	// 启动消息队列处理

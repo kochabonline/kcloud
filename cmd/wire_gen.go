@@ -11,6 +11,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/account"
 	"github.com/kochabonline/kcloud/apps/system/auth/google"
 	"github.com/kochabonline/kcloud/apps/system/auth/jwt"
+	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
@@ -104,7 +105,10 @@ func initializeApp(config2 *config.Config, log2 log.Helper) (*app.App, func(), e
 	auditRepository := audit.NewRepository(db)
 	auditController := audit.NewController(auditRepository, log2)
 	auditHandler := audit.NewHandler(auditController)
-	appApp := newApp(config2, log2, jwtController, queue, handler, googleHandler, jwtHandler, channalHandler, messageHandler, captchaHandler, deviceHandler, auditHandler)
+	menuRepository := menu.NewRepository(db)
+	menuController := menu.NewController(menuRepository, log2)
+	menuHandler := menu.NewHandler(menuController)
+	appApp := newApp(config2, log2, jwtController, queue, handler, googleHandler, jwtHandler, channalHandler, messageHandler, captchaHandler, deviceHandler, auditHandler, menuHandler)
 	return appApp, func() {
 		cleanup5()
 		cleanup4()
