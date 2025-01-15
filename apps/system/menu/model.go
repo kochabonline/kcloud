@@ -2,7 +2,7 @@ package menu
 
 import (
 	"github.com/kochabonline/kcloud/apps/common"
-	"github.com/kochabonline/kit/core/convert/tree"
+	"github.com/kochabonline/kit/core/util/tree"
 )
 
 type Menu struct {

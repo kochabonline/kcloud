@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -26,10 +26,10 @@ func Paginate(page int, size int) (offset int, limit int) {
 
 // 从上下文中获取账户id,账户角色
 func CtxAccount(ctx context.Context) (accountId int64, role int, err error) {
-	if accountId, err = tools.CtxValue[int64](ctx, "id"); err != nil {
+	if accountId, err = util.CtxValue[int64](ctx, "id"); err != nil {
 		return
 	}
-	if role, err = tools.CtxValue[int](ctx, "role"); err != nil {
+	if role, err = util.CtxValue[int](ctx, "role"); err != nil {
 		return
 	}
 	return

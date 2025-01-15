@@ -2,13 +2,14 @@ package jwt
 
 import (
 	"context"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/apps/system/account"
 	"github.com/kochabonline/kit/auth/jwt"
 	"github.com/kochabonline/kit/core/crypto/bcrypt"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/errors"
 	"github.com/kochabonline/kit/log"
 )
@@ -47,7 +48,7 @@ func (ctrl *Controller) Login(ctx context.Context, req *LoginRequest) (*Jwt, err
 	claims := map[string]any{
 		"id":       account.Id,
 		"username": account.Username,
-		"role":     account.Role,
+		"roles":    []string{account.Roles[0].Name},
 	}
 
 	atk, err := ctrl.jwtRedis.Generate(ctx, claims)
@@ -60,7 +61,7 @@ func (ctrl *Controller) Login(ctx context.Context, req *LoginRequest) (*Jwt, err
 }
 
 func (ctrl *Controller) Logout(ctx context.Context, req *LogoutRequest) error {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取账户Id失败", "error", err.Error())
 		return err
@@ -90,60 +91,33 @@ func (ctrl *Controller) Validate(c *gin.Context) (map[any]any, error) {
 
 	// 获取Authorization Header
 	authHeader := c.GetHeader(common.AuthorizationHeader)
+	authHeader = strings.TrimPrefix(authHeader, "Bearer ")
 	if authHeader == "" {
-		ctrl.log.Errorw("message", "缺少Authorization Header")
+		ctrl.log.Errorw("message", "缺少Authorization Header", "header", c.Request.Header)
 		return nil, common.ErrorMissAuthorizationHeader
 	}
 
 	// 解析jwt
 	claims, err := ctrl.jwtRedis.Parse(ctx, authHeader)
 	if err != nil {
-		ctrl.log.Errorw("message", "解析jwt失败", "error", err.Error())
-		return nil, err
+		ctrl.log.Errorw("message", "解析jwt失败", "claims", claims, "error", err.Error())
+		return nil, errors.Unauthorized("%s", err.Error())
 	}
-	id, ok := claims["id"].(float64)
-	if !ok {
-		ctrl.log.Errorw("message", "解析jwt中的账户id失败")
-		return nil, common.ErrUnauthorized
-	}
-	username, ok := claims["username"].(string)
-	if !ok {
-		ctrl.log.Errorw("message", "解析jwt中的用户名称失败")
-		return nil, common.ErrUnauthorized
-	}
-	role, ok := claims["role"].(float64)
-	if !ok {
-		ctrl.log.Errorw("message", "解析jwt中的用户角色失败")
-		return nil, common.ErrUnauthorized
-	}
-	// 获取语言
-	lang := c.GetHeader("Language")
 
-	result["id"] = int64(id)
-	result["username"] = username
-	result["role"] = int(role)
-	result["lang"] = lang
+	result["id"] = jwt.JwtMapClaimsParse[int64](claims, "id")
+	result["username"] = jwt.JwtMapClaimsParse[string](claims, "username")
+	result["roles"] = jwt.JwtMapClaimsParse[[]string](claims, "roles")
+	result["lang"] = c.GetHeader("Language")
 
 	return result, nil
 }
 
 func (ctrl *Controller) Kick(ctx context.Context, req *KickRequest) error {
-	// 获取账户角色
-	role, err := tools.CtxValue[int](ctx, "role")
-	if err != nil {
-		ctrl.log.Errorw("message", "获取账户角色失败", "error", err.Error())
-		return err
-	}
 	// 获取账户id
 	account, err := ctrl.accountController.FindByUsername(ctx, req.Username)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
 		return err
-	}
-
-	// 不能踢出比自己权限高的用户
-	if role < int(account.Role) {
-		return errors.Forbidden("您没有权限踢出该账户")
 	}
 
 	// 删除jwt

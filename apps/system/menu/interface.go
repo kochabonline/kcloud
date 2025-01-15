@@ -3,7 +3,7 @@ package menu
 import (
 	"context"
 
-	"github.com/kochabonline/kit/core/convert/tree"
+	"github.com/kochabonline/kit/core/util/tree"
 )
 
 type Interface interface {

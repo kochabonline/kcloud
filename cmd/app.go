@@ -10,6 +10,9 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
+	"github.com/kochabonline/kcloud/apps/system/role"
+	"github.com/kochabonline/kcloud/apps/system/role/bindaccount"
+	"github.com/kochabonline/kcloud/apps/system/role/bindmenu"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
 	"github.com/kochabonline/kcloud/apps/system/security/captcha"
 	"github.com/kochabonline/kcloud/apps/system/security/device"
@@ -29,9 +32,12 @@ func newApp(
 	// 消息队列处理
 	messageQueue *message.Queue,
 	// 下面都是注册路由的handler
-	accountHandler *account.Handler,
-	googleHandler *google.Handler,
 	jwtHandler *jwt.Handler,
+	googleHandler *google.Handler,
+	accountHandler *account.Handler,
+	roleHandler *role.Handler,
+	bindaccountHandler *bindaccount.Handler,
+	bindmenuHandler *bindmenu.Handler,
 	channalHandler *channal.Handler,
 	messageHandler *message.Handler,
 	captchaHandler *captcha.Handler,
@@ -41,9 +47,11 @@ func newApp(
 ) *app.App {
 	httpServer := server.NewHttpServer(
 		config, jwtController,
-		accountHandler,
-		googleHandler,
 		jwtHandler,
+		googleHandler,
+		accountHandler,
+		roleHandler,
+		bindmenuHandler,
 		channalHandler,
 		messageHandler,
 		captchaHandler,

@@ -19,10 +19,11 @@ definitions:
       nickname:
         description: 昵称
         type: string
-      role:
-        allOf:
-        - $ref: '#/definitions/common.Role'
+      roles:
         description: 角色
+        items:
+          type: string
+        type: array
       status:
         allOf:
         - $ref: '#/definitions/common.Status'
@@ -112,6 +113,32 @@ definitions:
     - device_id
     - device_name
     - user_agent
+    type: object
+  bindaccount.request:
+    properties:
+      account_id:
+        description: 账户id
+        type: integer
+      role_id:
+        description: 角色id
+        type: integer
+    required:
+    - account_id
+    - role_id
+    type: object
+  bindmenu.Request:
+    properties:
+      menuIds:
+        description: 菜单Id
+        items:
+          type: integer
+        type: array
+      roleId:
+        description: 角色Id
+        type: integer
+    required:
+    - menuIds
+    - roleId
     type: object
   captcha.VerifyEmailCodeRequest:
     properties:
@@ -258,14 +285,6 @@ definitions:
     x-enum-varnames:
     - StatusNormal
     - StatusDisabled
-  common.Role:
-    enum:
-    - 1
-    - 2
-    type: integer
-    x-enum-varnames:
-    - RoleUser
-    - RoleAdmin
   common.Status:
     enum:
     - 1
@@ -546,6 +565,31 @@ definitions:
         description: 总数
         type: integer
     type: object
+  role.Request:
+    properties:
+      code:
+        description: 角色代码
+        maxLength: 24
+        type: string
+      description:
+        description: 描述
+        maxLength: 128
+        type: string
+      name:
+        description: 角色名
+        maxLength: 24
+        type: string
+      status:
+        description: 状态
+        enum:
+        - 1
+        - 2
+        type: integer
+    required:
+    - code
+    - name
+    - status
+    type: object
 info:
   contact: {}
 paths:
@@ -585,7 +629,7 @@ paths:
         type: string
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -611,7 +655,7 @@ paths:
           $ref: '#/definitions/account.CreateRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -635,7 +679,7 @@ paths:
         type: integer
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -660,7 +704,7 @@ paths:
           $ref: '#/definitions/account.ChangeEmailRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -685,7 +729,7 @@ paths:
           $ref: '#/definitions/account.ChangeMobileRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -710,7 +754,7 @@ paths:
           $ref: '#/definitions/account.ChangePasswordRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -729,7 +773,7 @@ paths:
       parameters:
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -750,7 +794,7 @@ paths:
       parameters:
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -777,7 +821,7 @@ paths:
           $ref: '#/definitions/google.ValidateRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -804,7 +848,7 @@ paths:
           $ref: '#/definitions/jwt.KickRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -851,7 +895,7 @@ paths:
           $ref: '#/definitions/jwt.LogoutRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -876,7 +920,7 @@ paths:
           $ref: '#/definitions/jwt.RefreshRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -897,7 +941,7 @@ paths:
       parameters:
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -921,7 +965,7 @@ paths:
           $ref: '#/definitions/menu.Request'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -945,7 +989,7 @@ paths:
           $ref: '#/definitions/menu.Request'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -968,7 +1012,7 @@ paths:
         type: integer
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1021,7 +1065,7 @@ paths:
         - StatusDisabled
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1047,7 +1091,7 @@ paths:
           $ref: '#/definitions/channal.CreateRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1073,7 +1117,7 @@ paths:
         type: string
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1097,7 +1141,7 @@ paths:
         type: string
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1138,7 +1182,7 @@ paths:
         type: integer
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1164,7 +1208,7 @@ paths:
           $ref: '#/definitions/message.ChangeStatusRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1188,7 +1232,7 @@ paths:
         type: string
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1229,6 +1273,183 @@ paths:
       summary: 发送消息
       tags:
       - notifier
+  /role:
+    get:
+      consumes:
+      - application/json
+      description: 角色列表
+      parameters:
+      - description: 页码
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        maximum: 100
+        minimum: 1
+        name: size
+        type: integer
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 角色列表
+      tags:
+      - role
+    post:
+      consumes:
+      - application/json
+      description: 创建角色
+      parameters:
+      - description: 创建角色请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/role.Request'
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 创建角色
+      tags:
+      - role
+    put:
+      consumes:
+      - application/json
+      description: 修改角色
+      parameters:
+      - description: 修改角色请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/role.Request'
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 修改角色
+      tags:
+      - role
+  /role/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除角色
+      parameters:
+      - description: 角色Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 删除角色
+      tags:
+      - role
+  /role/bind/account/bind:
+    post:
+      consumes:
+      - application/json
+      description: 绑定账户角色
+      parameters:
+      - description: 绑定账户角色请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bindaccount.request'
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 绑定账户角色
+      tags:
+      - role
+  /role/bind/account/unbind:
+    post:
+      consumes:
+      - application/json
+      description: 解绑账户角色
+      parameters:
+      - description: 解绑账户角色请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bindaccount.request'
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 解绑账户角色
+      tags:
+      - role
+  /role/menu/edit:
+    post:
+      consumes:
+      - application/json
+      description: 编辑角色菜单
+      parameters:
+      - description: 编辑角色菜单请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bindmenu.Request'
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 编辑角色菜单
+      tags:
+      - role
   /security/audit:
     post:
       consumes:
@@ -1243,7 +1464,7 @@ paths:
           $ref: '#/definitions/audit.LastLoginDetailRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1262,7 +1483,7 @@ paths:
       parameters:
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1287,7 +1508,7 @@ paths:
           $ref: '#/definitions/captcha.VerifyEmailCodeRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1308,7 +1529,7 @@ paths:
       parameters:
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1333,7 +1554,7 @@ paths:
           $ref: '#/definitions/captcha.VerifyMobileCodeRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1370,7 +1591,7 @@ paths:
         type: integer
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1395,7 +1616,7 @@ paths:
           $ref: '#/definitions/device.BindRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1420,7 +1641,7 @@ paths:
           $ref: '#/definitions/device.ChangeRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:
@@ -1445,7 +1666,7 @@ paths:
           $ref: '#/definitions/device.UnbindRequest'
       - description: Authorization Token
         in: header
-        name: token
+        name: Authorization
         required: true
         type: string
       produces:

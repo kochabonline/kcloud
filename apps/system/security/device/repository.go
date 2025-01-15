@@ -36,11 +36,9 @@ func (repo *Repository) FindAll(ctx context.Context, req *FindAllRequest) (*Devi
 	if req.DeviceId != "" {
 		query = query.Where("device_id = ?", req.DeviceId)
 	}
-	if err := query.Model(&Device{}).Count(&devices.Total).Error; err != nil {
-		return nil, err
-	}
+
 	offset, limit := util.Paginate(req.Page, req.Size)
-	if err := query.Offset(offset).Limit(limit).Find(&devices.Items).Error; err != nil {
+	if err := query.Count(&devices.Total).Offset(offset).Limit(limit).Find(&devices.Items).Error; err != nil {
 		return nil, err
 	}
 

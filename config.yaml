@@ -9,6 +9,7 @@ http:
 mysql:
   database: kcloud
   password: 12345678
+  level: info
 
 redis:
   password: 12345678

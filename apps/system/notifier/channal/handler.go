@@ -31,7 +31,7 @@ func NewHandler(controller *Controller) *Handler {
 // @accept json
 // @produce json
 // @param request body CreateRequest true "创建通道请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} CreateResponse
 // @router /notifier/channal [post]
 func (h *Handler) Create(c *gin.Context) {
@@ -57,7 +57,7 @@ func (h *Handler) Create(c *gin.Context) {
 // @accept json
 // @produce json
 // @param query query FindAllRequest true "查询通道列表请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} Channels
 // @router /notifier/channal [get]
 func (h *Handler) List(c *gin.Context) {
@@ -83,7 +83,7 @@ func (h *Handler) List(c *gin.Context) {
 // @accept json
 // @produce json
 // @param query query FindByApiKeyRequest true "查询通道请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} Channal
 // @router /notifier/channal/detail [get]
 func (h *Handler) FindByApiKey(c *gin.Context) {
@@ -108,7 +108,7 @@ func (h *Handler) FindByApiKey(c *gin.Context) {
 // @accept json
 // @produce json
 // @param uri path DeleteRequest true "删除通道请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /notifier/channal/{id} [delete]
 func (h *Handler) Delete(c *gin.Context) {

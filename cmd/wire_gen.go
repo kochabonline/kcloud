@@ -14,6 +14,9 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
+	"github.com/kochabonline/kcloud/apps/system/role"
+	"github.com/kochabonline/kcloud/apps/system/role/bindaccount"
+	"github.com/kochabonline/kcloud/apps/system/role/bindmenu"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
 	"github.com/kochabonline/kcloud/apps/system/security/captcha"
 	"github.com/kochabonline/kcloud/apps/system/security/device"
@@ -89,11 +92,20 @@ func initializeApp(config2 *config.Config, log2 log.Helper) (*app.App, func(), e
 	channalController := channal.NewController(channalRepository, log2)
 	messageController := message.NewController(messageRepository, channalController, log2)
 	queue := message.NewQueue(messageController, messageRepository, client, log2)
-	handler := account.NewHandler(controller)
+	handler := jwt.NewHandler(jwtController)
 	googleRepository := google.NewRepository(db, client)
 	googleController := google.NewController(config2, googleRepository, log2)
 	googleHandler := google.NewHandler(googleController)
-	jwtHandler := jwt.NewHandler(jwtController)
+	accountHandler := account.NewHandler(controller)
+	roleRepository := role.NewRepository(db)
+	roleController := role.NewController(roleRepository, log2)
+	roleHandler := role.NewHandler(roleController)
+	bindaccountRepository := bindaccount.NewRepository(db)
+	bindaccountController := bindaccount.NewController(bindaccountRepository, log2)
+	bindaccountHandler := bindaccount.NewHandler(bindaccountController)
+	bindmenuRepository := bindmenu.NewRepository(db)
+	bindmenuController := bindmenu.NewController(bindmenuRepository, log2)
+	bindmenuHandler := bindmenu.NewHandler(bindmenuController)
 	channalHandler := channal.NewHandler(channalController)
 	messageHandler := message.NewHandler(messageController)
 	captchaRepository := captcha.NewRepository(client)
@@ -108,7 +120,7 @@ func initializeApp(config2 *config.Config, log2 log.Helper) (*app.App, func(), e
 	menuRepository := menu.NewRepository(db)
 	menuController := menu.NewController(menuRepository, log2)
 	menuHandler := menu.NewHandler(menuController)
-	appApp := newApp(config2, log2, jwtController, queue, handler, googleHandler, jwtHandler, channalHandler, messageHandler, captchaHandler, deviceHandler, auditHandler, menuHandler)
+	appApp := newApp(config2, log2, jwtController, queue, handler, googleHandler, accountHandler, roleHandler, bindaccountHandler, bindmenuHandler, channalHandler, messageHandler, captchaHandler, deviceHandler, auditHandler, menuHandler)
 	return appApp, func() {
 		cleanup5()
 		cleanup4()

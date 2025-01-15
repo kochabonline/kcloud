@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/kochabonline/kcloud/apps/common"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/errors"
 	"github.com/kochabonline/kit/log"
 	"github.com/kochabonline/kit/validator"
@@ -28,12 +28,12 @@ func NewController(repo *Repository, log log.Helper) *Controller {
 }
 
 func (ctrl *Controller) Create(ctx context.Context, req *CreateRequest) (*CreateResponse, error) {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取账户id失败", "error", err.Error())
 		return nil, err
 	}
-	lang, err := tools.CtxValue[string](ctx, "lang")
+	lang, err := util.CtxValue[string](ctx, "lang")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取语言失败", "error", err.Error())
 		return nil, err
@@ -127,6 +127,7 @@ func (ctrl *Controller) FindByApiKey(ctx context.Context, apiKey string) (*Chann
 }
 
 func (ctrl *Controller) FindAll(ctx context.Context, req *FindAllRequest) (*Channels, error) {
+	// TODO: 自己只能查看自己创建的通道
 	channals, err := ctrl.repo.FindAll(ctx, req)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询通道列表失败", "error", err.Error())

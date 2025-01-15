@@ -30,7 +30,7 @@ func NewHandler(controller *Controller) *Handler {
 // @tags security
 // @accept json
 // @produce json
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/captcha/mobile/send [post]
 func (h *Handler) SendMobileCode(c *gin.Context) {
@@ -49,7 +49,7 @@ func (h *Handler) SendMobileCode(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body VerifyMobileCodeRequest true "验证手机验证码请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} VerifyMobileCodeResponse
 // @router /security/captcha/mobile/verify [post]
 func (h *Handler) VerifyMobileCode(c *gin.Context) {
@@ -74,7 +74,7 @@ func (h *Handler) VerifyMobileCode(c *gin.Context) {
 // @tags security
 // @accept json
 // @produce json
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/captcha/email/send [post]
 func (h *Handler) SendEmailCode(c *gin.Context) {
@@ -93,7 +93,7 @@ func (h *Handler) SendEmailCode(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body VerifyEmailCodeRequest true "验证邮箱验证码请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} VerifyEmailCodeResponse
 // @router /security/captcha/email/verify [post]
 func (h *Handler) VerifyEmailCode(c *gin.Context) {

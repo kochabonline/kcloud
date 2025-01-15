@@ -29,7 +29,7 @@ func NewHandler(controller *Controller) *Handler {
 // @produce json
 // @param request body LastLoginDetailRequest true "账户登录环境请求"
 // param x-real-ip header string true "用户真实ip"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/audit [post]
 func (h *Handler) LastLoginDetail(c *gin.Context) {

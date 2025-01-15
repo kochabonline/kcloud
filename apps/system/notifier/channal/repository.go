@@ -3,7 +3,6 @@ package channal
 import (
 	"context"
 
-	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/internal/util"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -47,17 +46,8 @@ func (repo *Repository) FindByApiKey(ctx context.Context, apiKey string) (*Chann
 func (repo *Repository) FindAll(ctx context.Context, req *FindAllRequest) (*Channels, error) {
 	var channals Channels
 
-	// 从上下文中获取账号信息, 普通账号只能查看自己的通道
-	accountId, accountRole, err := util.CtxAccount(ctx)
-	if err != nil {
-		return nil, err
-	}
-
 	// 根据请求参数构建查询条件
 	filter := bson.M{}
-	if accountRole != int(common.RoleAdmin) {
-		filter["account_id"] = accountId
-	}
 	if req.ProviderType != "" {
 		filter["provider_type"] = req.ProviderType
 	}

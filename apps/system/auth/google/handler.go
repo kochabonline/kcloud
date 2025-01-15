@@ -28,7 +28,7 @@ func NewHandler(controller *Controller) *Handler {
 // @tags auth
 // @accept json
 // @produce json
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} GenerateResponse
 // @router /auth/gotp/generate [post]
 func (h *Handler) Generate(c *gin.Context) {
@@ -48,7 +48,7 @@ func (h *Handler) Generate(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ValidateRequest true "验证请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} ValidateResponse
 // @router /auth/gotp/verify [post]
 func (h *Handler) Validate(c *gin.Context) {

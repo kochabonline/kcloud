@@ -18,7 +18,7 @@ func (h *Handler) Register(r gin.IRouter) {
 		// 只有管理员可以创建账户
 		group.POST("", middleware.PermissionVPEWithConfig(
 			middleware.PermissionVPEConfig{
-				AllowedRole: int(common.RoleAdmin),
+				AllowedRoles: []string{common.RoleSuperAdmin},
 			},
 		), h.Create)
 		group.PUT("change/password", h.ChangePassword)
@@ -27,7 +27,7 @@ func (h *Handler) Register(r gin.IRouter) {
 		// 只有管理员可以查看账户列表
 		group.GET("", middleware.PermissionVPEWithConfig(
 			middleware.PermissionVPEConfig{
-				AllowedRole: int(common.RoleAdmin),
+				AllowedRoles: []string{common.RoleSuperAdmin},
 			},
 		), h.List)
 		group.GET("detail", h.Detail)
@@ -46,7 +46,7 @@ func NewHandler(controller *Controller) *Handler {
 // @accept json
 // @produce json
 // @param request body CreateRequest true "账户创建请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /account [post]
 func (h *Handler) Create(c *gin.Context) {
@@ -55,7 +55,7 @@ func (h *Handler) Create(c *gin.Context) {
 		response.GinJSONError(c, err)
 		return
 	}
-	
+
 	if err := h.controller.Create(c.Request.Context(), &req); err != nil {
 		response.GinJSONError(c, err)
 		return
@@ -71,7 +71,7 @@ func (h *Handler) Create(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ChangePasswordRequest true "账户修改密码请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /account/change/password [put]
 func (h *Handler) ChangePassword(c *gin.Context) {
@@ -96,7 +96,7 @@ func (h *Handler) ChangePassword(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ChangeEmailRequest true "账户修改邮箱请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /account/change/email [put]
 func (h *Handler) ChangeEmail(c *gin.Context) {
@@ -121,7 +121,7 @@ func (h *Handler) ChangeEmail(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ChangeMobileRequest true "账户修改手机号请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /account/change/mobile [put]
 func (h *Handler) ChangeMobile(c *gin.Context) {
@@ -146,7 +146,7 @@ func (h *Handler) ChangeMobile(c *gin.Context) {
 // @accept json
 // @produce json
 // @param query query FindAllRequest true "查询账户列表请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} Accounts
 // @router /account [get]
 func (h *Handler) List(c *gin.Context) {
@@ -171,7 +171,7 @@ func (h *Handler) List(c *gin.Context) {
 // @tags account
 // @accept json
 // @produce json
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} Account
 // @router /account/detail [get]
 func (h *Handler) Detail(c *gin.Context) {
@@ -191,7 +191,7 @@ func (h *Handler) Detail(c *gin.Context) {
 // @accept json
 // @produce json
 // @param uri path DeleteRequest true "删除账户请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /account/{id} [delete]
 func (h *Handler) Delete(c *gin.Context) {

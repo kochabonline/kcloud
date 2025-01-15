@@ -4,7 +4,7 @@ package common
 type Status int
 
 const (
-	// 1:正常
+	// 1:启用
 	StatusNormal Status = iota + 1
 	// 2:禁用
 	StatusDisabled
@@ -12,18 +12,18 @@ const (
 	StatusDeleted
 )
 
-// 角色
-type Role int
-
+// 系统角色
 const (
 	// 1:普通账户
-	RoleUser Role = iota + 1
+	RoleNormal string = "normal"
 	// 2:管理员
-	RoleAdmin
+	RoleAdmin string = "admin"
+	// 3:超级管理员
+	RoleSuperAdmin string = "super_admin"
 )
 
 // 安全设置安全码Key
 var SecurityCodeKey = "security:code:%v"
 
 // 验证header
-var AuthorizationHeader = "token"
+var AuthorizationHeader = "Authorization"

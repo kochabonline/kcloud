@@ -19,9 +19,9 @@ func (h *Handler) Register(r gin.IRouter) {
 		group.POST("logout", h.Logout)
 		group.POST("refresh", h.Refresh)
 		// 只有管理员可以踢人下线
-		group.POST("kick", middleware.PermissionHPEWithConfig(
-			middleware.PermissionHPEConfig{
-				SkippedRole: int(common.RoleAdmin),
+		group.POST("kick", middleware.PermissionVPEWithConfig(
+			middleware.PermissionVPEConfig{
+				AllowedRoles: []string{common.RoleSuperAdmin},
 			},
 		), h.Kick)
 	}
@@ -63,7 +63,7 @@ func (h *Handler) Login(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body LogoutRequest true "登出请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /auth/logout [post]
 func (h *Handler) Logout(c *gin.Context) {
@@ -88,7 +88,7 @@ func (h *Handler) Logout(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body RefreshRequest true "刷新请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {string} string
 // @router /auth/refresh [post]
 func (h *Handler) Refresh(c *gin.Context) {
@@ -114,7 +114,7 @@ func (h *Handler) Refresh(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body KickRequest true "踢人请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /auth/kick [post]
 func (h *Handler) Kick(c *gin.Context) {

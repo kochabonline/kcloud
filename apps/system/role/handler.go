@@ -1,4 +1,4 @@
-package menu
+package role
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,12 +11,12 @@ type Handler struct {
 }
 
 func (h *Handler) Register(r gin.IRouter) {
-	group := r.Group("menu")
+	group := r.Group("role")
 	{
 		group.POST("", h.Create)
 		group.PUT("", h.Update)
 		group.DELETE(":id", h.Delete)
-		group.GET("", h.Tree)
+		group.GET("", h.List)
 	}
 }
 
@@ -25,15 +25,15 @@ func NewHandler(controller *Controller) *Handler {
 }
 
 // @title kcloud API
-// @summary 创建菜单
-// @description 创建菜单
-// @tags menu
+// @summary 创建角色
+// @description 创建角色
+// @tags role
 // @accept json
 // @produce json
-// @param request body Request true "创建菜单请求"
+// @param request body Request true "创建角色请求"
 // @param Authorization header string true "Authorization Token"
 // @success 200
-// @router /menu [post]
+// @router /role [post]
 func (h *Handler) Create(c *gin.Context) {
 	var req Request
 	if err := validator.GinShouldBind(c, &req); err != nil {
@@ -45,18 +45,20 @@ func (h *Handler) Create(c *gin.Context) {
 		response.GinJSONError(c, err)
 		return
 	}
+
+	response.GinJSON(c, nil)
 }
 
 // @title kcloud API
-// @summary 修改菜单
-// @description 修改菜单
-// @tags menu
+// @summary 修改角色
+// @description 修改角色
+// @tags role
 // @accept json
 // @produce json
-// @param request body Request true "修改菜单请求"
+// @param request body Request true "修改角色请求"
 // @param Authorization header string true "Authorization Token"
 // @success 200
-// @router /menu [put]
+// @router /role [put]
 func (h *Handler) Update(c *gin.Context) {
 	var req Request
 	if err := validator.GinShouldBind(c, &req); err != nil {
@@ -68,21 +70,23 @@ func (h *Handler) Update(c *gin.Context) {
 		response.GinJSONError(c, err)
 		return
 	}
+
+	response.GinJSON(c, nil)
 }
 
 // @title kcloud API
-// @summary 删除菜单
-// @description 删除菜单
-// @tags menu
+// @summary 删除角色
+// @description 删除角色
+// @tags role
 // @accept json
 // @produce json
-// @param request path DeleteRequest true "删除菜单请求"
+// @param request path DeleteRequest true "删除角色请求"
 // @param Authorization header string true "Authorization Token"
 // @success 200
-// @router /menu/{id} [delete]
+// @router /role/{id} [delete]
 func (h *Handler) Delete(c *gin.Context) {
 	var req DeleteRequest
-	if err := validator.GinShouldBindUri(c, &req); err != nil {
+	if err := validator.GinShouldBind(c, &req); err != nil {
 		response.GinJSONError(c, err)
 		return
 	}
@@ -91,23 +95,32 @@ func (h *Handler) Delete(c *gin.Context) {
 		response.GinJSONError(c, err)
 		return
 	}
+
+	response.GinJSON(c, nil)
 }
 
 // @title kcloud API
-// @summary 树形菜单
-// @description 树形菜单
-// @tags menu
+// @summary 角色列表
+// @description 角色列表
+// @tags role
 // @accept json
 // @produce json
+// @param query query FindAllRequest true "角色列表请求"
 // @param Authorization header string true "Authorization Token"
 // @success 200
-// @router /menu [get]
-func (h *Handler) Tree(c *gin.Context) {
-	resp, err := h.controller.Tree(c.Request.Context())
+// @router /role [get]
+func (h *Handler) List(c *gin.Context) {
+	var req FindAllRequest
+	if err := validator.GinShouldBind(c, &req); err != nil {
+		response.GinJSONError(c, err)
+		return
+	}
+
+	roles, err := h.controller.FindAll(c.Request.Context(), &req)
 	if err != nil {
 		response.GinJSONError(c, err)
 		return
 	}
 
-	response.GinJSON(c, resp)
+	response.GinJSON(c, roles)
 }

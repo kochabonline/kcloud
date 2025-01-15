@@ -16,7 +16,7 @@ func (h *Handler) Register(r gin.IRouter) {
 	group := r.Group("security/device")
 	group.Use(middleware.PermissionVPEWithConfig(
 		middleware.PermissionVPEConfig{
-			AllowedRole: int(common.RoleAdmin),
+			AllowedRoles: []string{common.RoleSuperAdmin},
 		},
 	))
 	{
@@ -38,7 +38,7 @@ func NewHandler(controller *Controller) *Handler {
 // @accept json
 // @produce json
 // @param request body BindRequest true "设备绑定请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/device/bind [post]
 func (h *Handler) Bind(c *gin.Context) {
@@ -63,7 +63,7 @@ func (h *Handler) Bind(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body UnbindRequest true "设备解绑请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/device/unbind [post]
 func (h *Handler) Unbind(c *gin.Context) {
@@ -88,7 +88,7 @@ func (h *Handler) Unbind(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ChangeRequest true "设备更换请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/device/change [put]
 func (h *Handler) Change(c *gin.Context) {
@@ -113,7 +113,7 @@ func (h *Handler) Change(c *gin.Context) {
 // @accept json
 // @produce json
 // @param query query FindAllRequest true "设备列表请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /security/device [get]
 func (h *Handler) List(c *gin.Context) {

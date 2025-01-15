@@ -2,6 +2,7 @@ package account
 
 import (
 	"github.com/kochabonline/kcloud/apps/common"
+	"github.com/kochabonline/kcloud/apps/system/role"
 )
 
 type Account struct {
@@ -18,7 +19,7 @@ type Account struct {
 	// 手机号
 	Mobile string `json:"mobile" gorm:"type:varchar(24);index;comment:手机号"`
 	// 角色
-	Role common.Role `json:"role" gorm:"type:tinyint(1);default:1;comment:角色 1:普通用户 2:管理员"`
+	Roles []role.Role `json:"roles" gorm:"many2many:role_bind_account;"`
 	// 状态
 	Status common.Status `json:"status" gorm:"type:tinyint(1);default:1;comment:状态 1:正常 2:禁用 3:删除"`
 }

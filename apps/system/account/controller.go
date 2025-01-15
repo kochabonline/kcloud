@@ -6,9 +6,8 @@ import (
 	"time"
 
 	"github.com/kochabonline/kcloud/apps/common"
-	"github.com/kochabonline/kcloud/internal/util"
 	"github.com/kochabonline/kit/core/crypto/bcrypt"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/log"
 )
 
@@ -59,7 +58,7 @@ func (ctrl *Controller) Create(ctx context.Context, req *CreateRequest) error {
 }
 
 func (ctrl *Controller) changeQuery(ctx context.Context, code string) (int64, error) {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取Id失败", "error", err.Error())
 		return 0, err
@@ -162,7 +161,7 @@ func (ctrl *Controller) FindByUsername(ctx context.Context, username string) (*A
 }
 
 func (ctrl *Controller) Detail(ctx context.Context) (*Account, error) {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取Id失败", "error", err.Error())
 		return &Account{}, err

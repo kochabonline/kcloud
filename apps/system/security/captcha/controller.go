@@ -9,7 +9,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/account"
 	"github.com/kochabonline/kcloud/config"
 	"github.com/kochabonline/kit/core/bot/email"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/log"
 )
 
@@ -41,15 +41,15 @@ func NewController(controller *account.Controller, repo *Repository, config *con
 
 func (ctrl *Controller) getMobile(ctx context.Context) (string, error) {
 	var mobile string
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文中获取账户id失败", "error", err.Error())
-		return mobile, common.ErrUnauthorized
+		return mobile, common.ErrorUnauthorized
 	}
 	account, err := ctrl.accountController.FindById(ctx, accountId)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
-		return mobile, common.ErrUnauthorized
+		return mobile, common.ErrorUnauthorized
 	}
 	mobile = account.Mobile
 	return mobile, nil
@@ -83,7 +83,7 @@ func (ctrl *Controller) VerifyMobileCode(ctx context.Context, req *VerifyMobileC
 
 	if captcha != req.Code {
 		ctrl.log.Errorw("message", "验证码错误", "code", req.Code)
-		return &resp, common.ErrInvalidCaptcha
+		return &resp, common.ErrorInvalidCaptcha
 	}
 	resp.Ok = true
 
@@ -92,15 +92,15 @@ func (ctrl *Controller) VerifyMobileCode(ctx context.Context, req *VerifyMobileC
 
 func (ctrl *Controller) getEmail(ctx context.Context) (string, error) {
 	var email string
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文中获取账户id失败", "error", err.Error())
-		return email, common.ErrUnauthorized
+		return email, common.ErrorUnauthorized
 	}
 	account, err := ctrl.accountController.FindById(ctx, accountId)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
-		return email, common.ErrUnauthorized
+		return email, common.ErrorUnauthorized
 	}
 	email = account.Email
 	return email, nil
@@ -113,7 +113,7 @@ func (ctrl *Controller) SendEmailCode(ctx context.Context) error {
 		return err
 	}
 
-	code := tools.GenerateRandomCode(6)
+	code := util.GenerateRandomCode(6)
 	resp, err := ctrl.email.Send(email.NewMessage().With().
 		From("kcloud").
 		To([]string{accountEmail}).
@@ -150,7 +150,7 @@ func (ctrl *Controller) VerifyEmailCode(ctx context.Context, req *VerifyEmailCod
 
 	if captcha != req.Code {
 		ctrl.log.Errorw("message", "验证码错误", "code", req.Code)
-		return &resp, common.ErrInvalidCaptcha
+		return &resp, common.ErrorInvalidCaptcha
 	}
 	resp.Ok = true
 

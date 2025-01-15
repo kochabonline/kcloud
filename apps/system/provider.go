@@ -8,19 +8,25 @@ import (
 	"github.com/kochabonline/kcloud/apps/system/menu"
 	"github.com/kochabonline/kcloud/apps/system/notifier/channal"
 	"github.com/kochabonline/kcloud/apps/system/notifier/message"
+	"github.com/kochabonline/kcloud/apps/system/role"
+	"github.com/kochabonline/kcloud/apps/system/role/bindaccount"
+	"github.com/kochabonline/kcloud/apps/system/role/bindmenu"
 	"github.com/kochabonline/kcloud/apps/system/security/audit"
 	"github.com/kochabonline/kcloud/apps/system/security/captcha"
 	"github.com/kochabonline/kcloud/apps/system/security/device"
 )
 
 var ProviderSet = wire.NewSet(
-	account.ProviderSet,
-	google.ProviderSet,
 	jwt.ProviderSet,
-	channal.ProviderSet,
-	message.ProviderSet,
+	google.ProviderSet,
+	account.ProviderSet,
+	role.ProviderSet,
+	bindaccount.ProviderSet,
+	bindmenu.ProviderSet,
 	captcha.ProviderSet,
 	device.ProviderSet,
 	audit.ProviderSet,
 	menu.ProviderSet,
+	channal.ProviderSet,
+	message.ProviderSet,
 )

@@ -72,7 +72,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -111,7 +111,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -149,7 +149,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -187,7 +187,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -225,7 +225,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -254,7 +254,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -293,7 +293,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -322,7 +322,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -363,7 +363,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -404,7 +404,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -476,7 +476,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -514,7 +514,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -546,7 +546,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -582,7 +582,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -618,7 +618,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -653,7 +653,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -731,7 +731,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -770,7 +770,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -809,7 +809,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -848,7 +848,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -907,7 +907,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -946,7 +946,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1029,7 +1029,273 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/role": {
+            "get": {
+                "description": "角色列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "角色列表",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "description": "修改角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "修改角色",
+                "parameters": [
+                    {
+                        "description": "修改角色请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role.Request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "创建角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "创建角色",
+                "parameters": [
+                    {
+                        "description": "创建角色请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role.Request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/role/bind/account/bind": {
+            "post": {
+                "description": "绑定账户角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "绑定账户角色",
+                "parameters": [
+                    {
+                        "description": "绑定账户角色请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindaccount.request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/role/bind/account/unbind": {
+            "post": {
+                "description": "解绑账户角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "解绑账户角色",
+                "parameters": [
+                    {
+                        "description": "解绑账户角色请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindaccount.request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/role/menu/edit": {
+            "post": {
+                "description": "编辑角色菜单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "编辑角色菜单",
+                "parameters": [
+                    {
+                        "description": "编辑角色菜单请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindmenu.Request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/role/{id}": {
+            "delete": {
+                "description": "删除角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "角色Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1067,7 +1333,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1096,7 +1362,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1134,7 +1400,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1166,7 +1432,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1204,7 +1470,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1260,7 +1526,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1298,7 +1564,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1336,7 +1602,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1374,7 +1640,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Authorization Token",
-                        "name": "token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     }
@@ -1415,13 +1681,12 @@ const docTemplate = `{
                     "description": "昵称",
                     "type": "string"
                 },
-                "role": {
+                "roles": {
                     "description": "角色",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/common.Role"
-                        }
-                    ]
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "status": {
                     "description": "状态",
@@ -1546,6 +1811,43 @@ const docTemplate = `{
                 "user_agent": {
                     "description": "用户客户端",
                     "type": "string"
+                }
+            }
+        },
+        "bindaccount.request": {
+            "type": "object",
+            "required": [
+                "account_id",
+                "role_id"
+            ],
+            "properties": {
+                "account_id": {
+                    "description": "账户id",
+                    "type": "integer"
+                },
+                "role_id": {
+                    "description": "角色id",
+                    "type": "integer"
+                }
+            }
+        },
+        "bindmenu.Request": {
+            "type": "object",
+            "required": [
+                "menuIds",
+                "roleId"
+            ],
+            "properties": {
+                "menuIds": {
+                    "description": "菜单Id",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "roleId": {
+                    "description": "角色Id",
+                    "type": "integer"
                 }
             }
         },
@@ -1742,17 +2044,6 @@ const docTemplate = `{
             "x-enum-varnames": [
                 "StatusNormal",
                 "StatusDisabled"
-            ]
-        },
-        "common.Role": {
-            "type": "integer",
-            "enum": [
-                1,
-                2
-            ],
-            "x-enum-varnames": [
-                "RoleUser",
-                "RoleAdmin"
             ]
         },
         "common.Status": {
@@ -2143,6 +2434,39 @@ const docTemplate = `{
                 "total": {
                     "description": "总数",
                     "type": "integer"
+                }
+            }
+        },
+        "role.Request": {
+            "type": "object",
+            "required": [
+                "code",
+                "name",
+                "status"
+            ],
+            "properties": {
+                "code": {
+                    "description": "角色代码",
+                    "type": "string",
+                    "maxLength": 24
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string",
+                    "maxLength": 128
+                },
+                "name": {
+                    "description": "角色名",
+                    "type": "string",
+                    "maxLength": 24
+                },
+                "status": {
+                    "description": "状态",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
                 }
             }
         }

@@ -8,7 +8,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/config"
 	"github.com/kochabonline/kit/app"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/log"
 	"github.com/oschwald/geoip2-golang"
 )
@@ -39,12 +39,12 @@ func NewController(repository *Repository, log log.Helper) *Controller {
 
 // 账户最近登录详情
 func (ctrl *Controller) LastLoginDetail(ctx context.Context, ip string, req *LastLoginDetailRequest) error {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文中获取账户id失败", "err", err.Error())
 		return err
 	}
-	accountUsername, err := tools.CtxValue[string](ctx, "username")
+	accountUsername, err := util.CtxValue[string](ctx, "username")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文中获取账户名称失败", "err", err.Error())
 		return err

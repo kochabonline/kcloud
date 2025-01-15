@@ -9,7 +9,7 @@ import (
 	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/config"
 	"github.com/kochabonline/kit/auth/gotp"
-	"github.com/kochabonline/kit/core/tools"
+	"github.com/kochabonline/kit/core/util"
 	"github.com/kochabonline/kit/log"
 )
 
@@ -40,7 +40,7 @@ func NewController(config *config.Config, repo *Repository, log log.Helper) *Con
 }
 
 func (ctrl *Controller) Generate(ctx context.Context) (*GenerateResponse, error) {
-	username, err := tools.CtxValue[string](ctx, "username")
+	username, err := util.CtxValue[string](ctx, "username")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取用户名失败", "error", err.Error())
 		return nil, err
@@ -54,7 +54,7 @@ func (ctrl *Controller) Generate(ctx context.Context) (*GenerateResponse, error)
 	}
 
 	// 保存到redis
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取账户Id失败", "error", err.Error())
 		return nil, err
@@ -68,7 +68,7 @@ func (ctrl *Controller) Generate(ctx context.Context) (*GenerateResponse, error)
 }
 
 func (ctrl *Controller) Validate(ctx context.Context, req *ValidateRequest) (*ValidateResponse, error) {
-	accountId, err := tools.CtxValue[int64](ctx, "id")
+	accountId, err := util.CtxValue[int64](ctx, "id")
 	if err != nil {
 		ctrl.log.Errorw("message", "从上下文获取账户Id失败", "error", err.Error())
 		return nil, err

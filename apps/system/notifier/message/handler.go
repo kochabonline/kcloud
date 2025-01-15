@@ -62,7 +62,7 @@ func (h *Handler) Create(c *gin.Context) {
 // @accept json
 // @produce json
 // @param query query FindAllRequest true "查询消息列表请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200 {object} Messages
 // @router /notifier/message [get]
 func (h *Handler) List(c *gin.Context) {
@@ -88,7 +88,7 @@ func (h *Handler) List(c *gin.Context) {
 // @accept json
 // @produce json
 // @param request body ChangeStatusRequest true "更新消息状态请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /notifier/message [put]
 func (h *Handler) ChangeStatus(c *gin.Context) {
@@ -114,7 +114,7 @@ func (h *Handler) ChangeStatus(c *gin.Context) {
 // @accept json
 // @produce json
 // @param uri path DeleteRequest true "删除消息请求"
-// @param token header string true "Authorization Token"
+// @param Authorization header string true "Authorization Token"
 // @success 200
 // @router /notifier/message/{id} [delete]
 func (h *Handler) Delete(c *gin.Context) {

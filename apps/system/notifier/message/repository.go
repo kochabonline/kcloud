@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/kochabonline/kcloud/apps/common"
 	"github.com/kochabonline/kcloud/internal/util"
 	"github.com/kochabonline/kit/log"
 	kkafka "github.com/kochabonline/kit/store/kafka"
@@ -78,17 +77,9 @@ func (repo *Repository) ChangeStatus(ctx context.Context, req *ChangeStatusReque
 func (repo *Repository) FindAll(ctx context.Context, req *FindAllRequest) (*Messages, error) {
 	var messages Messages
 
-	// 从上下文中获取账号信息, 普通账号只能查看自己的通道
-	accountId, accountRole, err := util.CtxAccount(ctx)
-	if err != nil {
-		return nil, err
-	}
-
 	// 根据请求参数构建查询条件
+	// TODO: 自己只能查看自己创建的消息
 	filter := bson.M{}
-	if accountRole != int(common.RoleAdmin) {
-		filter["account_id"] = accountId
-	}
 	if req.Level != "" {
 		filter["level"] = req.Level
 	}
