@@ -27,3 +27,6 @@ var SecurityCodeKey = "security:code:%v"
 
 // 验证header
 var AuthorizationHeader = "Authorization"
+
+// 语言header
+var LanguageHeader = "Language"

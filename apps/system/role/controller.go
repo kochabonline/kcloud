@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/kochabonline/kcloud/apps/common"
+	"github.com/kochabonline/kit/core/util/slice"
 	"github.com/kochabonline/kit/log"
 )
 
@@ -77,4 +78,24 @@ func (ctrl *Controller) FindAll(ctx context.Context, req *FindAllRequest) (*Role
 	}
 
 	return roles, nil
+}
+
+func (ctrl *Controller) FindRouteByRoles(ctx context.Context, req *FindRouteByRolesRequest) (*FindRouteByRolesResponse, error) {
+	roles, err := ctrl.repo.FindByRoles(ctx, req.Roles)
+	if err != nil {
+		ctrl.log.Errorw("message", "查询角色列表失败", "error", err.Error())
+		return nil, err
+	}
+
+	var routes []string
+	for _, role := range roles {
+		for _, menu := range role.Menus {
+			routes = append(routes, menu.Router)
+		}
+	}
+
+	// 去重
+	removeDuplicate := slice.RemoveDuplicate(routes)
+
+	return &FindRouteByRolesResponse{Routes: removeDuplicate}, nil
 }

@@ -5,7 +5,7 @@ import "github.com/kochabonline/kcloud/apps/common"
 type GoogleAuth struct {
 	common.Meta
 	// 账户Id
-	AccountId int64 `json:"account_id" gorm:"not null;index;comment:账户Id"`
+	AccountId int64 `json:"accountId" gorm:"not null;index;comment:账户Id"`
 	// 谷歌验证器密钥
 	Secret string `json:"secret" gorm:"not null;comment:谷歌验证器密钥"`
 	// 状态

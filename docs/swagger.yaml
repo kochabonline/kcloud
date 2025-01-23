@@ -1,10 +1,10 @@
 definitions:
   account.Account:
     properties:
-      created_at:
+      createdAt:
         description: 创建时间
         type: integer
-      deleted_at:
+      deletedAt:
         description: 删除时间
         type: integer
       email:
@@ -22,13 +22,13 @@ definitions:
       roles:
         description: 角色
         items:
-          type: string
+          $ref: '#/definitions/role.Role'
         type: array
       status:
         allOf:
         - $ref: '#/definitions/common.Status'
         description: 状态
-      updated_at:
+      updatedAt:
         description: 更新时间
         type: integer
       username:
@@ -53,36 +53,36 @@ definitions:
       email:
         description: 新邮箱
         type: string
-      security_code:
+      securityCode:
         description: 安全码
         type: string
     required:
     - email
-    - security_code
+    - securityCode
     type: object
   account.ChangeMobileRequest:
     properties:
       mobile:
         description: 新手机号
         type: string
-      security_code:
+      securityCode:
         description: 安全码
         type: string
     required:
     - mobile
-    - security_code
+    - securityCode
     type: object
   account.ChangePasswordRequest:
     properties:
       password:
         description: 新密码
         type: string
-      security_code:
+      securityCode:
         description: 安全码
         type: string
     required:
     - password
-    - security_code
+    - securityCode
     type: object
   account.CreateRequest:
     properties:
@@ -100,31 +100,31 @@ definitions:
     type: object
   audit.LastLoginDetailRequest:
     properties:
-      device_id:
+      deviceId:
         description: 设备id
         type: string
-      device_name:
+      deviceName:
         description: 设备名称
         type: string
-      user_agent:
+      userAgent:
         description: 用户客户端
         type: string
     required:
-    - device_id
-    - device_name
-    - user_agent
+    - deviceId
+    - deviceName
+    - userAgent
     type: object
   bindaccount.request:
     properties:
-      account_id:
+      accountId:
         description: 账户id
         type: integer
-      role_id:
+      roleId:
         description: 角色id
         type: integer
     required:
-    - account_id
-    - role_id
+    - accountId
+    - roleId
     type: object
   bindmenu.Request:
     properties:
@@ -176,13 +176,13 @@ definitions:
     type: object
   channal.Channal:
     properties:
-      account_id:
+      accountId:
         description: 账户Id
         type: integer
-      api_key:
+      apiKey:
         description: ApiKey
         type: string
-      created_at:
+      createdAt:
         description: 创建时间
         type: integer
       description:
@@ -193,7 +193,7 @@ definitions:
         type: string
       limiter:
         description: 限速器
-      limiter_type:
+      limiterType:
         description: 限速器类型
         type: string
       name:
@@ -201,7 +201,7 @@ definitions:
         type: string
       provider:
         description: 供应商
-      provider_type:
+      providerType:
         description: 供应商类型
         type: string
       secret:
@@ -211,7 +211,7 @@ definitions:
         allOf:
         - $ref: '#/definitions/channal.Status'
         description: 通道状态
-      updated_at:
+      updatedAt:
         description: 更新时间
         type: integer
     type: object
@@ -237,7 +237,7 @@ definitions:
           sliding_window: {"window":0, "limit":0}
           token_bucket: {"capacity":0, "rate":0}
         type: string
-      limiter_type:
+      limiterType:
         description: 限速器类型
         enum:
         - sliding_window
@@ -254,7 +254,7 @@ definitions:
           lark: {"webhook":"", "secret":""}
           telegram: {"token":"", "chat_id":""}
         type: string
-      provider_type:
+      providerType:
         description: 供应商类型
         enum:
         - email
@@ -268,11 +268,11 @@ definitions:
     required:
     - name
     - provider
-    - provider_type
+    - providerType
     type: object
   channal.CreateResponse:
     properties:
-      api_key:
+      apiKey:
         type: string
       secret:
         type: string
@@ -297,10 +297,10 @@ definitions:
     - StatusDeleted
   device.BindRequest:
     properties:
-      account_id:
+      accountId:
         description: 账户id
         type: string
-      device_id:
+      deviceId:
         description: 设备id
         type: string
       name:
@@ -310,17 +310,17 @@ definitions:
         description: 设备类型
         type: string
     required:
-    - account_id
-    - device_id
+    - accountId
+    - deviceId
     - name
     - type
     type: object
   device.ChangeRequest:
     properties:
-      account_id:
+      accountId:
         description: 账户id
         type: string
-      device_id:
+      deviceId:
         description: 设备id
         type: string
       name:
@@ -330,26 +330,26 @@ definitions:
         description: 设备类型
         type: string
     required:
-    - account_id
-    - device_id
+    - accountId
+    - deviceId
     - name
     - type
     type: object
   device.UnbindRequest:
     properties:
-      account_id:
+      accountId:
         description: 账户id
         type: string
-      device_id:
+      deviceId:
         description: 设备id
         type: string
     required:
-    - account_id
-    - device_id
+    - accountId
+    - deviceId
     type: object
   google.GenerateResponse:
     properties:
-      qr_code:
+      qrCode:
         description: 二维码base64
         type: string
       secret:
@@ -369,16 +369,16 @@ definitions:
       ok:
         description: 是否验证通过
         type: boolean
-      security_code:
+      securityCode:
         description: 安全码
         type: string
     type: object
   jwt.Jwt:
     properties:
-      access_token:
+      accessToken:
         description: 访问令牌
         type: string
-      refresh_token:
+      refreshToken:
         description: 刷新令牌
         type: string
     type: object
@@ -404,26 +404,26 @@ definitions:
     type: object
   jwt.LogoutRequest:
     properties:
-      refresh_token:
+      refreshToken:
         description: 刷新令牌
         type: string
     required:
-    - refresh_token
+    - refreshToken
     type: object
   jwt.RefreshRequest:
     properties:
-      refresh_token:
+      refreshToken:
         description: 刷新令牌
         type: string
     required:
-    - refresh_token
+    - refreshToken
     type: object
   menu.Request:
     properties:
       component:
         description: 路由路径
         type: string
-      hide_menu:
+      hideMenu:
         description: 隐藏菜单
         type: boolean
       i18n:
@@ -432,7 +432,7 @@ definitions:
       icon:
         description: 菜单图标
         type: string
-      keeper_alive:
+      keeperAlive:
         description: 缓存菜单
         type: boolean
       name:
@@ -441,7 +441,7 @@ definitions:
       order:
         description: 菜单排序
         type: integer
-      parent_id:
+      parentId:
         description: 父级菜单id
         type: integer
       router:
@@ -460,7 +460,7 @@ definitions:
     - component
     - icon
     - name
-    - parent_id
+    - parentId
     - router
     - status
     - title
@@ -471,7 +471,7 @@ definitions:
       content:
         description: 正文
         type: string
-      encrypted_content:
+      encryptedContent:
         description: 加密正文, 仅在账户控制台可查看
         type: string
       level:
@@ -504,7 +504,7 @@ definitions:
       content:
         description: 消息内容
         type: string
-      encrypted_content:
+      encryptedContent:
         description: 加密消息内容, 仅在账户控制台可查看
         type: string
       level:
@@ -528,29 +528,29 @@ definitions:
     type: object
   message.Message:
     properties:
-      _id:
-        description: 消息Id
-        type: string
-      account_id:
+      accountId:
         description: 账户Id
         type: integer
       body:
         allOf:
         - $ref: '#/definitions/message.Body'
         description: 消息体
-      channel_api_key:
+      channalApiKey:
         description: 通道ApiKey
         type: string
-      created_at:
+      createdAt:
         description: 创建时间
         type: integer
+      id:
+        description: 消息Id
+        type: string
       payload:
         description: 附加信息
         type: string
       status:
         description: 状态
         type: string
-      updated_at:
+      updatedAt:
         description: 更新时间
         type: integer
     type: object
@@ -564,6 +564,14 @@ definitions:
       total:
         description: 总数
         type: integer
+    type: object
+  role.FindRouteByRolesResponse:
+    properties:
+      routes:
+        description: 路由列表
+        items:
+          type: string
+        type: array
     type: object
   role.Request:
     properties:
@@ -580,7 +588,7 @@ definitions:
         maxLength: 24
         type: string
       status:
-        description: 状态
+        description: 状态 1:启用 2:禁用
         enum:
         - 1
         - 2
@@ -589,6 +597,33 @@ definitions:
     - code
     - name
     - status
+    type: object
+  role.Role:
+    properties:
+      code:
+        description: 角色编码
+        type: string
+      createdAt:
+        description: 创建时间
+        type: integer
+      deletedAt:
+        description: 删除时间
+        type: integer
+      description:
+        description: 描述
+        type: string
+      id:
+        description: 自增主键
+        type: integer
+      name:
+        description: 角色名
+        type: string
+      status:
+        description: 状态
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: integer
     type: object
 info:
   contact: {}
@@ -1031,7 +1066,7 @@ paths:
       parameters:
       - description: 创建时间
         in: query
-        name: created_at
+        name: createdAt
         type: integer
       - description: 关键字
         in: query
@@ -1047,7 +1082,7 @@ paths:
         - dingtalk
         - telegram
         in: query
-        name: provider_type
+        name: providerType
         type: string
       - description: 每页数量
         in: query
@@ -1136,7 +1171,7 @@ paths:
       parameters:
       - description: ApiKey
         in: query
-        name: api_key
+        name: apiKey
         required: true
         type: string
       - description: Authorization Token
@@ -1162,7 +1197,7 @@ paths:
       parameters:
       - description: 消息类型
         in: query
-        name: created_at
+        name: createdAt
         type: integer
       - description: 关键字
         in: query
@@ -1250,7 +1285,7 @@ paths:
       description: 发送消息
       parameters:
       - in: query
-        name: api_key
+        name: apiKey
         required: true
         type: string
       - in: query
@@ -1450,6 +1485,35 @@ paths:
       summary: 编辑角色菜单
       tags:
       - role
+  /role/route:
+    get:
+      consumes:
+      - application/json
+      description: 根据角色列表获取角色列表路由
+      parameters:
+      - collectionFormat: csv
+        description: 角色列表
+        in: query
+        items:
+          type: string
+        name: roles
+        required: true
+        type: array
+      - description: Authorization Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/role.FindRouteByRolesResponse'
+      summary: 根据角色列表获取角色列表路由
+      tags:
+      - role
   /security/audit:
     post:
       consumes:
@@ -1575,11 +1639,11 @@ paths:
       parameters:
       - description: 账户id
         in: query
-        name: account_id
+        name: accountId
         type: string
       - description: 设备id
         in: query
-        name: device_id
+        name: deviceId
         type: string
       - description: 页码
         in: query

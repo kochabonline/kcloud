@@ -8,7 +8,7 @@ import (
 type Menu struct {
 	common.Meta
 	// 父级菜单id
-	ParentId int64 `json:"parent_id" gorm:"type:tinyint(1);default:0;index;comment:父级菜单id"`
+	ParentId int64 `json:"parentId" gorm:"type:tinyint(1);default:0;index;comment:父级菜单id"`
 	// 菜单类型
 	Type int `json:"type" gorm:"type:tinyint(1);default:0;comment:菜单类型"`
 	// 菜单名称
@@ -24,9 +24,9 @@ type Menu struct {
 	// 国际化
 	I18n string `json:"i18n" gorm:"type:varchar(50);comment:国际化"`
 	// 隐藏菜单
-	HideMenu bool `json:"hide_menu" gorm:"comment:隐藏菜单"`
+	HideMenu bool `json:"hideMenu" gorm:"comment:隐藏菜单"`
 	// 缓存菜单
-	KeeperAlive bool `json:"keeper_alive" gorm:"comment:缓存菜单"`
+	KeeperAlive bool `json:"keeperAlive" gorm:"comment:缓存菜单"`
 	// 菜单图标
 	Icon string `json:"icon" gorm:"type:varchar(50);comment:图标"`
 	// 菜单排序
@@ -42,15 +42,22 @@ func (Menu) TableName() string {
 func (m *Menu) GetNode() tree.Node {
 	return m
 }
+
 func (m *Menu) SetChildren(children []tree.Node) {
 	m.Children = make([]*Menu, len(children))
 	for i, child := range children {
 		m.Children[i] = child.(*Menu)
 	}
 }
+
 func (m *Menu) GetId() int64 {
 	return m.Id
 }
+
 func (m *Menu) GetParentId() int64 {
 	return m.ParentId
+}
+
+func (m *Menu) GetOrder() int {
+	return m.Order
 }

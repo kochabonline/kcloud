@@ -30,17 +30,17 @@ type LoginRequest struct {
 // 登出请求
 type LogoutRequest struct {
 	// 刷新令牌
-	RefreshToken string `json:"refresh_token" validate:"required" label:"刷新令牌"`
+	RefreshToken string `json:"refreshToken" validate:"required" label:"刷新令牌"`
 }
 
 type RefreshRequest struct {
 	// 刷新令牌
-	RefreshToken string `json:"refresh_token" validate:"required" label:"刷新令牌"`
+	RefreshToken string `json:"refreshToken" validate:"required" label:"刷新令牌"`
 }
 
 type ValidateRequest struct {
 	// 访问令牌
-	AccessToken string `json:"access_token" validate:"required" label:"访问令牌"`
+	AccessToken string `json:"accessToken" validate:"required" label:"访问令牌"`
 }
 
 type KickRequest struct {

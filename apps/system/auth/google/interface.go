@@ -13,7 +13,7 @@ type GenerateResponse struct {
 	// 谷歌验证器密钥
 	Secret string `json:"secret" label:"密钥"`
 	// 二维码base64
-	QrCode string `json:"qr_code" label:"二维码"`
+	QrCode string `json:"qrCode" label:"二维码"`
 }
 
 type ValidateRequest struct {
@@ -25,5 +25,5 @@ type ValidateResponse struct {
 	// 是否验证通过
 	Ok bool `json:"ok" label:"是否验证通过"`
 	// 安全码
-	SecurityCode string `json:"security_code" label:"安全码"`
+	SecurityCode string `json:"securityCode" label:"安全码"`
 }

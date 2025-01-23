@@ -17,27 +17,24 @@ import (
 var _ Interface = (*Controller)(nil)
 
 type Controller struct {
-	jwtRedis          *jwt.JwtRedis
-	accountController *account.Controller
-	log               log.Helper
+	jwtRedis    *jwt.JwtRedis
+	accountCtrl *account.Controller
+	log         log.Helper
 }
 
-func NewController(jwtRedis *jwt.JwtRedis, accountController *account.Controller, log log.Helper) *Controller {
+func NewController(jwtRedis *jwt.JwtRedis, accountCtrl *account.Controller, log log.Helper) *Controller {
 	return &Controller{
-		jwtRedis:          jwtRedis,
-		accountController: accountController,
-		log:               log,
+		jwtRedis:    jwtRedis,
+		accountCtrl: accountCtrl,
+		log:         log,
 	}
 }
 
 func (ctrl *Controller) Login(ctx context.Context, req *LoginRequest) (*Jwt, error) {
-	account, err := ctrl.accountController.FindByUsername(ctx, req.Username)
+	account, err := ctrl.accountCtrl.FindByUsername(ctx, req.Username)
 	if err != nil {
-		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
-		return nil, err
-	}
-	if account.Id == 0 {
-		return nil, common.ErrorAccountNotExist
+		ctrl.log.Errorw("message", "查询账户失败", "username", req.Username, "error", err.Error())
+		return nil, common.ErrorAccountOrPassword
 	}
 
 	if err := bcrypt.ComparePassword(account.Password, req.Password); err != nil {
@@ -45,10 +42,14 @@ func (ctrl *Controller) Login(ctx context.Context, req *LoginRequest) (*Jwt, err
 		return nil, common.ErrorAccountOrPassword
 	}
 
+	roles := make([]string, len(account.Roles))
+	for i, role := range account.Roles {
+		roles[i] = role.Name
+	}
 	claims := map[string]any{
 		"id":       account.Id,
 		"username": account.Username,
-		"roles":    []string{account.Roles[0].Name},
+		"roles":    roles,
 	}
 
 	atk, err := ctrl.jwtRedis.Generate(ctx, claims)
@@ -86,7 +87,6 @@ func (ctrl *Controller) Refresh(ctx context.Context, req *RefreshRequest) (strin
 }
 
 func (ctrl *Controller) Validate(c *gin.Context) (map[any]any, error) {
-	result := make(map[any]any)
 	ctx := c.Request.Context()
 
 	// 获取Authorization Header
@@ -104,17 +104,18 @@ func (ctrl *Controller) Validate(c *gin.Context) (map[any]any, error) {
 		return nil, errors.Unauthorized("%s", err.Error())
 	}
 
+	result := make(map[any]any)
 	result["id"] = jwt.JwtMapClaimsParse[int64](claims, "id")
 	result["username"] = jwt.JwtMapClaimsParse[string](claims, "username")
 	result["roles"] = jwt.JwtMapClaimsParse[[]string](claims, "roles")
-	result["lang"] = c.GetHeader("Language")
+	result["lang"] = c.GetHeader(common.LanguageHeader)
 
 	return result, nil
 }
 
 func (ctrl *Controller) Kick(ctx context.Context, req *KickRequest) error {
 	// 获取账户id
-	account, err := ctrl.accountController.FindByUsername(ctx, req.Username)
+	account, err := ctrl.accountCtrl.FindByUsername(ctx, req.Username)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
 		return err

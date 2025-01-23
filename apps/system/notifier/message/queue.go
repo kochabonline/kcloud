@@ -76,7 +76,7 @@ func (q *Queue) handle(message kafka.Message) {
 	}
 
 	// 下面的成功与否都需要入库
-	channal, err := q.ctrl.channalController.FindByApiKey(q.ctx, msg.ChannalApiKey)
+	channal, err := q.ctrl.channalCtrl.FindByApiKey(q.ctx, msg.ChannalApiKey)
 	if err != nil {
 		q.repo.InsertFailure(q.ctx, &msg, err)
 		q.log.Errorw("message", "查询通道失败", "channal", channal, "error", err.Error())

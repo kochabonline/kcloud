@@ -21,7 +21,7 @@ func (h *Handler) Register(r gin.IRouter) {
 		// 只有管理员可以踢人下线
 		group.POST("kick", middleware.PermissionVPEWithConfig(
 			middleware.PermissionVPEConfig{
-				AllowedRoles: []string{common.RoleSuperAdmin},
+				AllowedRoles: []string{common.RoleSuperAdmin, common.RoleAdmin},
 			},
 		), h.Kick)
 	}

@@ -65,14 +65,9 @@ func (ctrl *Controller) changeQuery(ctx context.Context, code string) (int64, er
 	}
 
 	// 查询账户是否存在
-	result, err := ctrl.repo.FindById(ctx, accountId)
-	if err != nil {
-		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
+	if _, err := ctrl.repo.FindById(ctx, accountId); err != nil {
+		ctrl.log.Errorw("message", "查询账户失败", "accountId", accountId, "error", err.Error())
 		return 0, err
-	}
-	if result.Id == 0 {
-		ctrl.log.Errorw("message", "账户不存在", "accountId", accountId)
-		return 0, common.ErrorAccountNotExist
 	}
 
 	// 查询安全码是否正确
@@ -143,21 +138,11 @@ func (ctrl *Controller) FindAll(ctx context.Context, req *FindAllRequest) (*Acco
 }
 
 func (ctrl *Controller) FindById(ctx context.Context, id int64) (*Account, error) {
-	account, err := ctrl.repo.FindById(ctx, id)
-	if err != nil {
-		ctrl.log.Errorw("message", "Id查询账户失败", "error", err.Error())
-		return &Account{}, err
-	}
-	return account, nil
+	return ctrl.repo.FindById(ctx, id)
 }
 
 func (ctrl *Controller) FindByUsername(ctx context.Context, username string) (*Account, error) {
-	account, err := ctrl.repo.FindByUsername(ctx, username)
-	if err != nil {
-		ctrl.log.Errorw("message", "用户名查询账户失败", "error", err.Error())
-		return &Account{}, err
-	}
-	return account, nil
+	return ctrl.repo.FindByUsername(ctx, username)
 }
 
 func (ctrl *Controller) Detail(ctx context.Context) (*Account, error) {
@@ -182,14 +167,9 @@ func (ctrl *Controller) Detail(ctx context.Context) (*Account, error) {
 
 func (ctrl *Controller) Delete(ctx context.Context, req *DeleteRequest) error {
 	// 查询账户是否存在
-	result, err := ctrl.repo.FindById(ctx, req.Id)
-	if err != nil {
-		ctrl.log.Errorw("message", "查询账户失败", "error", err.Error())
+	if _, err := ctrl.repo.FindById(ctx, req.Id); err != nil {
+		ctrl.log.Errorw("message", "查询账户失败", "accountId", req.Id, "error", err.Error())
 		return err
-	}
-	if result.Id == 0 {
-		ctrl.log.Errorw("message", "账户不存在", "accountId", req.Id)
-		return common.ErrorAccountNotExist
 	}
 
 	// 删除账户

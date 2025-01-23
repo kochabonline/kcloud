@@ -19,41 +19,41 @@ type Channal struct {
 	// 消息Id
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	// 账户Id
-	AccountId int64 `json:"account_id"`
+	AccountId int64 `json:"accountId" bson:"account_id"`
 	// 通道名称
-	Name string `json:"name"`
+	Name string `json:"name" bson:"name"`
 	// 通道描述
-	Description string `json:"description"`
+	Description string `json:"description" bson:"description"`
 	// ApiKey
-	ApiKey string `json:"api_key"`
+	ApiKey string `json:"apiKey" bson:"api_key"`
 	// 密钥
-	Secret string `json:"secret"`
+	Secret string `json:"secret" bson:"secret"`
 	// 供应商类型
-	ProviderType string `json:"provider_type"`
+	ProviderType string `json:"providerType" bson:"provider_type"`
 	// 供应商
-	Provider any `json:"provider"`
+	Provider any `json:"provider" bson:"provider"`
 	// 限速器类型
-	LimiterType string `json:"limiter_type"`
+	LimiterType string `json:"limiterType" bson:"limiter_type"`
 	// 限速器
-	Limiter any `json:"limiter"`
+	Limiter any `json:"limiter" bson:"limiter"`
 	// 通道状态
-	Status Status `json:"status"`
+	Status Status `json:"status" bson:"status"`
 	// 创建时间
-	CreatedAt int64 `json:"created_at"`
+	CreatedAt int64 `json:"createdAt" bson:"created_at"`
 	// 更新时间
-	UpdatedAt int64 `json:"updated_at"`
+	UpdatedAt int64 `json:"updatedAt" bson:"updated_at"`
 }
 
 // 邮件供应商
 type ProviderEmail struct {
 	// SMTP服务器
-	SMTPServer string `json:"smtp_server" validate:"required"`
+	Server string `json:"server" validate:"required"`
 	// SMTP端口
-	SMTPPort int `json:"smtp_port" validate:"required,gt=0"`
+	Port int `json:"port" validate:"required,gt=0"`
 	// SMTP用户名
-	SMTPUsername string `json:"smtp_username" validate:"required"`
+	Username string `json:"username" validate:"required"`
 	// SMTP密码
-	SMTPPassword string `json:"smtp_password" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 // 钉钉供应商
@@ -77,7 +77,7 @@ type ProviderTelegram struct {
 	// 机器人Token
 	Token string `json:"token" validate:"required"`
 	// 机器人ChatId
-	ChatId int64 `json:"chat_id" validate:"required"`
+	ChatId int64 `json:"chatId" validate:"required"`
 }
 
 // 滑动窗口限速器
@@ -125,10 +125,10 @@ func (ch *Channal) Bot(client *http.Client) (bot.Bot, error) {
 			return nil, err
 		}
 		return email.New(email.SmtpPlainAuth{
-			Host:     provider.SMTPServer,
-			Port:     provider.SMTPPort,
-			Username: provider.SMTPUsername,
-			Password: provider.SMTPPassword,
+			Host:     provider.Server,
+			Port:     provider.Port,
+			Username: provider.Username,
+			Password: provider.Password,
 		}), nil
 	case ProviderTypeDingTalk:
 		var provider ProviderDingTalk

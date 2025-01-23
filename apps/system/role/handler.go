@@ -17,6 +17,7 @@ func (h *Handler) Register(r gin.IRouter) {
 		group.PUT("", h.Update)
 		group.DELETE(":id", h.Delete)
 		group.GET("", h.List)
+		group.GET("route", h.Route)
 	}
 }
 
@@ -123,4 +124,30 @@ func (h *Handler) List(c *gin.Context) {
 	}
 
 	response.GinJSON(c, roles)
+}
+
+// @title kcloud API
+// @summary 根据角色列表获取角色列表路由
+// @description 根据角色列表获取角色列表路由
+// @tags role
+// @accept json
+// @produce json
+// @param query query FindRouteByRolesRequest true "根据角色列表获取角色列表路由请求"
+// @param Authorization header string true "Authorization Token"
+// @success 200 {object} FindRouteByRolesResponse
+// @router /role/route [get]
+func (h *Handler) Route(c *gin.Context) {
+	var req FindRouteByRolesRequest
+	if err := validator.GinShouldBind(c, &req); err != nil {
+		response.GinJSONError(c, err)
+		return
+	}
+
+	routes, err := h.controller.FindRouteByRoles(c.Request.Context(), &req)
+	if err != nil {
+		response.GinJSONError(c, err)
+		return
+	}
+
+	response.GinJSON(c, routes)
 }

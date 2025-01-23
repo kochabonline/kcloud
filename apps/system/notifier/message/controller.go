@@ -18,22 +18,22 @@ import (
 var _ Interface = (*Controller)(nil)
 
 type Controller struct {
-	repo              *Repository
-	channalController *channal.Controller
-	log               log.Helper
+	repo        *Repository
+	channalCtrl *channal.Controller
+	log         log.Helper
 }
 
-func NewController(repo *Repository, channalController *channal.Controller, log log.Helper) *Controller {
+func NewController(repo *Repository, channalCtrl *channal.Controller, log log.Helper) *Controller {
 	return &Controller{
-		repo:              repo,
-		channalController: channalController,
-		log:               log,
+		repo:        repo,
+		channalCtrl: channalCtrl,
+		log:         log,
 	}
 }
 
 func (ctrl *Controller) Create(ctx context.Context, query *CreateQuery, req *CreateRequest) error {
 	// 查询通道是否存在
-	channal, err := ctrl.channalController.FindByApiKey(ctx, query.ApiKey)
+	channal, err := ctrl.channalCtrl.FindByApiKey(ctx, query.ApiKey)
 	if err != nil {
 		ctrl.log.Errorw("message", "查询通道失败", "error", err.Error())
 		return err

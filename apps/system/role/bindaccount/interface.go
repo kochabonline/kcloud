@@ -13,9 +13,9 @@ type Interface interface {
 
 type request struct {
 	// 账户id
-	AccountId int64 `json:"account_id" validate:"required" label:"账户id"`
+	AccountId int64 `json:"accountId" validate:"required" label:"账户id"`
 	// 角色id
-	RoleId int64 `json:"role_id" validate:"required" label:"角色id"`
+	RoleId int64 `json:"roleId" validate:"required" label:"角色id"`
 }
 
 type findByAccountIdRequest struct {

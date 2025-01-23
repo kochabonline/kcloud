@@ -38,7 +38,7 @@ type ChangePasswordRequest struct {
 	// 新密码
 	Password string `json:"password" validate:"required" label:"新密码"`
 	// 安全码
-	SecurityCode string `json:"security_code" validate:"required" label:"安全码"`
+	SecurityCode string `json:"securityCode" validate:"required" label:"安全码"`
 }
 
 // 修改邮箱请求
@@ -46,7 +46,7 @@ type ChangeEmailRequest struct {
 	// 新邮箱
 	Email string `json:"email" validate:"required,email" label:"邮箱"`
 	// 安全码
-	SecurityCode string `json:"security_code" validate:"required" label:"安全码"`
+	SecurityCode string `json:"securityCode" validate:"required" label:"安全码"`
 }
 
 // 修改手机号请求
@@ -54,7 +54,7 @@ type ChangeMobileRequest struct {
 	// 新手机号
 	Mobile string `json:"mobile" validate:"required" label:"手机号"`
 	// 安全码
-	SecurityCode string `json:"security_code" validate:"required" label:"安全码"`
+	SecurityCode string `json:"securityCode" validate:"required" label:"安全码"`
 }
 
 // 用户列表查询请求
@@ -74,9 +74,9 @@ type FindAllRequest struct {
 // 用户列表查询响应
 type Accounts struct {
 	// 总数
-	Total int64 `json:"total"`
+	Total int64
 	// 用户列表
-	Items []*Account `json:"items"`
+	Items []*Account
 }
 
 // 删除用户请求

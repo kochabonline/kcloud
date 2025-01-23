@@ -15,7 +15,7 @@ type Interface interface {
 
 // 创建消息查询参数
 type CreateQuery struct {
-	ApiKey    string `form:"api_key" validate:"required" label:"api密钥"`
+	ApiKey    string `form:"apiKey" validate:"required" label:"api密钥"`
 	Timestamp int64  `form:"timestamp" validate:"omitempty" label:"时间戳"`
 	Signature string `form:"signature" validate:"omitempty" label:"签名"`
 }
@@ -31,7 +31,7 @@ type CreateRequest struct {
 	// 消息内容
 	Content string `json:"content" validate:"required" label:"消息内容"`
 	// 加密消息内容, 仅在账户控制台可查看
-	EncryptedContent string `json:"encrypted_content" validate:"omitempty" label:"加密消息内容"`
+	EncryptedContent string `json:"encryptedContent" validate:"omitempty" label:"加密消息内容"`
 }
 
 // 更新消息请求
@@ -51,7 +51,7 @@ type FindAllRequest struct {
 	// 消息等级
 	Level string `form:"level" validate:"omitempty" label:"消息等级"`
 	// 消息类型
-	CreatedAt int `form:"created_at" validate:"omitempty" label:"创建时间"`
+	CreatedAt int `form:"createdAt" validate:"omitempty" label:"创建时间"`
 	// 关键字
 	Keyword string `form:"keyword" validate:"omitempty" label:"关键字"`
 }

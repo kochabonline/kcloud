@@ -20,9 +20,9 @@ type FindAllRequest struct {
 	// 每页数量
 	Size int `form:"size" validate:"omitempty"`
 	// 账户id
-	AccountId string `form:"account_id" validate:"omitempty"`
+	AccountId string `form:"accountId" validate:"omitempty"`
 	// 设备id
-	DeviceId string `form:"device_id" validate:"omitempty"`
+	DeviceId string `form:"deviceId" validate:"omitempty"`
 }
 
 // 设备列表响应
@@ -36,9 +36,9 @@ type Devices struct {
 // 绑定设备请求
 type BindRequest struct {
 	// 账户id
-	AccountId string `json:"account_id" validate:"required"`
+	AccountId string `json:"accountId" validate:"required"`
 	// 设备id
-	DeviceId string `json:"device_id" validate:"required"`
+	DeviceId string `json:"deviceId" validate:"required"`
 	// 设备名称
 	Name string `json:"name" validate:"required"`
 	// 设备类型
@@ -48,17 +48,17 @@ type BindRequest struct {
 // 解绑设备请求
 type UnbindRequest struct {
 	// 账户id
-	AccountId string `json:"account_id" validate:"required"`
+	AccountId string `json:"accountId" validate:"required"`
 	// 设备id
-	DeviceId string `json:"device_id" validate:"required"`
+	DeviceId string `json:"deviceId" validate:"required"`
 }
 
 // 更换设备请求
 type ChangeRequest struct {
 	// 账户id
-	AccountId string `json:"account_id" validate:"required"`
+	AccountId string `json:"accountId" validate:"required"`
 	// 设备id
-	DeviceId string `json:"device_id" validate:"required"`
+	DeviceId string `json:"deviceId" validate:"required"`
 	// 设备名称
 	Name string `json:"name" validate:"required"`
 	// 设备类型

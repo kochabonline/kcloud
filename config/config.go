@@ -20,80 +20,80 @@ func init() {
 }
 
 type Config struct {
-	Http  Http  `json:"http"`
-	Mysql Mysql `json:"mysql"`
-	Redis Redis `json:"redis"`
-	Mongo Mongo `json:"mongo"`
-	Kafka Kafka `json:"kafka"`
-	Jwt   Jwt   `json:"jwt"`
-	Email Email `json:"email"`
-	Audit Audit `json:"audit"`
+	Http  Http
+	Mysql Mysql
+	Redis Redis
+	Mongo Mongo
+	Kafka Kafka
+	Jwt   Jwt
+	Email Email
+	Audit Audit
 }
 
 type Http struct {
-	Host    string `json:"host" default:"localhost"`
-	Port    int    `json:"port" default:"8080"`
-	Level   string `json:"level" default:"release"`
+	Host    string `default:"localhost"`
+	Port    int    `default:"8080"`
+	Level   string `default:"release"`
 	Swagger struct {
-		Enabled bool `json:"enabled"`
+		Enabled bool
 	}
 	Health struct {
-		Enabled bool `json:"enabled"`
+		Enabled bool
 	}
 	Metrics struct {
-		Enabled bool `json:"enabled"`
+		Enabled bool
 	}
 }
 
 type Mysql struct {
-	Host     string `json:"host" default:"localhost"`
-	Port     int    `json:"port" default:"3306"`
-	User     string `json:"user" default:"root"`
-	Password string `json:"password"`
-	Database string `json:"database"`
-	Level    string `json:"level" default:"silent"`
+	Host     string `default:"localhost"`
+	Port     int    `default:"3306"`
+	User     string `default:"root"`
+	Password string
+	Database string
+	Level    string `default:"silent"`
 }
 
 type Redis struct {
-	Host     string `json:"host" default:"localhost"`
-	Port     int    `json:"port" default:"6379"`
-	Password string `json:"password"`
-	DB       int    `json:"db" default:"0"`
+	Host     string `default:"localhost"`
+	Port     int    `default:"6379"`
+	Password string
+	DB       int `default:"0"`
 }
 
 type Mongo struct {
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
-	User     string `json:"user"`
-	Password string `json:"password"`
+	Host     string
+	Port     int
+	User     string
+	Password string
 }
 
 type Kafka struct {
-	Brokers                []string `json:"brokers" default:"localhost:9092"`
-	Username               string   `json:"username"`
-	Password               string   `json:"password"`
-	AllowAutoTopicCreation bool     `json:"allowAutoTopicCreation" default:"false"`
+	Brokers                []string `default:"localhost:9092"`
+	Username               string
+	Password               string
+	AllowAutoTopicCreation bool `default:"false"`
 }
 
 type Jwt struct {
-	Secret            string `json:"secret"`
-	AccessTokenExpire int64  `json:"accessTokenExpire" default:"3600"`
-	RefreshExpire     int64  `json:"refreshExpire" default:"7200"`
-	MultipleLogin     bool   `json:"multipleLogin" default:"true"`
+	Secret            string
+	AccessTokenExpire int64 `default:"3600"`
+	RefreshExpire     int64 `default:"7200"`
+	MultipleLogin     bool  `default:"true"`
 }
 
 type Email struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
+	Username string
+	Password string
+	Host     string
+	Port     int
 }
 
 type Audit struct {
 	GeoLite2 struct {
-		Enabled bool   `json:"enabled"`
-		Path    string `json:"path" default:"GeoLite2-City.mmdb"`
-	} `json:"geoLite2"`
+		Enabled bool
+		Path    string `default:"GeoLite2-City.mmdb"`
+	}
 }
 
 func (h *Http) Addr() string {

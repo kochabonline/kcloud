@@ -11,13 +11,18 @@ type Handler struct {
 }
 
 func (h *Handler) Register(r gin.IRouter) {
-	group := r.Group("menu")
+	mgroup := r.Group("menu")
 	{
-		group.POST("", h.Create)
-		group.PUT("", h.Update)
-		group.DELETE(":id", h.Delete)
-		group.GET("", h.Tree)
+		mgroup.POST("", h.Create)
+		mgroup.PUT("", h.Update)
+		mgroup.DELETE(":id", h.Delete)
+		mgroup.GET("", h.Tree)
 	}
+	// rgroup := r.Group("route")
+	// {
+	// 	rgroup.GET("const", h.ConstRoute)
+	// 	rgroup.GET("dynamic", h.DynamicRoute)
+	// }
 }
 
 func NewHandler(controller *Controller) *Handler {

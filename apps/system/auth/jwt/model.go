@@ -2,7 +2,7 @@ package jwt
 
 type Jwt struct {
 	// 访问令牌
-	AccessToken string `json:"access_token"`
+	AccessToken string `json:"accessToken"`
 	// 刷新令牌
-	RefreshToken string `json:"refresh_token"`
+	RefreshToken string `json:"refreshToken"`
 }

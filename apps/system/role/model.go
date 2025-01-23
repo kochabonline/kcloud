@@ -2,7 +2,7 @@ package role
 
 import (
 	"github.com/kochabonline/kcloud/apps/common"
-	"github.com/kochabonline/kcloud/apps/system/role/bindmenu"
+	"github.com/kochabonline/kcloud/apps/system/menu"
 )
 
 type Role struct {
@@ -16,7 +16,7 @@ type Role struct {
 	// 描述
 	Description string `json:"description" gorm:"type:varchar(128);comment:描述"`
 	// 菜单
-	Menus []bindmenu.RoleBindMenu `json:"menus" gorm:"many2many:role_bind_menu;"`
+	Menus []menu.Menu `json:"-" gorm:"many2many:role_bind_menu;"`
 }
 
 func (Role) TableName() string {

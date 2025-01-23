@@ -123,6 +123,8 @@ github.com/kochabonline/kit v0.0.0-20250115103243-49f0de37f4ee h1:GzwRL3aZdl/MjH
 github.com/kochabonline/kit v0.0.0-20250115103243-49f0de37f4ee/go.mod h1:WR/FUHHF5y4GYVxyoEA4aoDGArN7K3kN5y4fP2wfTtM=
 github.com/kochabonline/kit v0.0.0-20250115170141-dfbc07121356 h1:uI5qFGYoQYY0npsqMrslAQXP7pzdtAtzxYL8lq4Ecto=
 github.com/kochabonline/kit v0.0.0-20250115170141-dfbc07121356/go.mod h1:WR/FUHHF5y4GYVxyoEA4aoDGArN7K3kN5y4fP2wfTtM=
+github.com/kochabonline/kit v0.0.0-20250115184231-ae391848716e h1:UVLIAodmgu/+4HcSX6uKyAlCzAsxz7psEMr/B4hJQnk=
+github.com/kochabonline/kit v0.0.0-20250115184231-ae391848716e/go.mod h1:WR/FUHHF5y4GYVxyoEA4aoDGArN7K3kN5y4fP2wfTtM=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=

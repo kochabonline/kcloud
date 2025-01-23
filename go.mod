@@ -3,7 +3,7 @@ module github.com/kochabonline/kcloud
 go 1.23.4
 
 require (
-	github.com/kochabonline/kit v0.0.0-20250115170141-dfbc07121356
+	github.com/kochabonline/kit v0.0.0-20250115184231-ae391848716e
 	github.com/oschwald/geoip2-golang v1.11.0
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/segmentio/kafka-go v0.4.47

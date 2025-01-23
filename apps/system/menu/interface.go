@@ -19,7 +19,7 @@ type Interface interface {
 
 type Request struct {
 	// 父级菜单id
-	ParentId int64 `json:"parent_id" validate:"required" label:"父级菜单id"`
+	ParentId int64 `json:"parentId" validate:"required" label:"父级菜单id"`
 	// 菜单类型
 	Type int `json:"type" validate:"required" label:"菜单类型"`
 	// 菜单名称
@@ -35,9 +35,9 @@ type Request struct {
 	// 国际化
 	I18n string `json:"i18n" validate:"omitempty" label:"国际化"`
 	// 隐藏菜单
-	HideMenu bool `json:"hide_menu" validate:"omitempty" label:"隐藏菜单"`
+	HideMenu bool `json:"hideMenu" validate:"omitempty" label:"隐藏菜单"`
 	// 缓存菜单
-	KeeperAlive bool `json:"keeper_alive" validate:"omitempty" label:"缓存菜单"`
+	KeeperAlive bool `json:"keeperAlive" validate:"omitempty" label:"缓存菜单"`
 	// 菜单图标
 	Icon string `json:"icon" validate:"required" label:"图标"`
 	// 菜单排序
@@ -46,4 +46,8 @@ type Request struct {
 
 type DeleteRequest struct {
 	Id int64 `uri:"id" validate:"required" label:"菜单id"`
+}
+
+type FindByRolesRequest struct {
+	Roles []string `json:"roles" validate:"required" label:"角色列表"`
 }

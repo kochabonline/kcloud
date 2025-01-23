@@ -682,7 +682,7 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "description": "创建时间",
-                        "name": "created_at",
+                        "name": "createdAt",
                         "in": "query"
                     },
                     {
@@ -705,7 +705,7 @@ const docTemplate = `{
                         ],
                         "type": "string",
                         "description": "供应商类型",
-                        "name": "provider_type",
+                        "name": "providerType",
                         "in": "query"
                     },
                     {
@@ -802,7 +802,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ApiKey",
-                        "name": "api_key",
+                        "name": "apiKey",
                         "in": "query",
                         "required": true
                     },
@@ -877,7 +877,7 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "description": "消息类型",
-                        "name": "created_at",
+                        "name": "createdAt",
                         "in": "query"
                     },
                     {
@@ -974,7 +974,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "api_key",
+                        "name": "apiKey",
                         "in": "query",
                         "required": true
                     },
@@ -1271,6 +1271,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/role/route": {
+            "get": {
+                "description": "根据角色列表获取角色列表路由",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "role"
+                ],
+                "summary": "根据角色列表获取角色列表路由",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "角色列表",
+                        "name": "roles",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/role.FindRouteByRolesResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/role/{id}": {
             "delete": {
                 "description": "删除角色",
@@ -1502,13 +1545,13 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "账户id",
-                        "name": "account_id",
+                        "name": "accountId",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "设备id",
-                        "name": "device_id",
+                        "name": "deviceId",
                         "in": "query"
                     },
                     {
@@ -1657,11 +1700,11 @@ const docTemplate = `{
         "account.Account": {
             "type": "object",
             "properties": {
-                "created_at": {
+                "createdAt": {
                     "description": "创建时间",
                     "type": "integer"
                 },
-                "deleted_at": {
+                "deletedAt": {
                     "description": "删除时间",
                     "type": "integer"
                 },
@@ -1685,7 +1728,7 @@ const docTemplate = `{
                     "description": "角色",
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/role.Role"
                     }
                 },
                 "status": {
@@ -1696,7 +1739,7 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "updated_at": {
+                "updatedAt": {
                     "description": "更新时间",
                     "type": "integer"
                 },
@@ -1726,14 +1769,14 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "email",
-                "security_code"
+                "securityCode"
             ],
             "properties": {
                 "email": {
                     "description": "新邮箱",
                     "type": "string"
                 },
-                "security_code": {
+                "securityCode": {
                     "description": "安全码",
                     "type": "string"
                 }
@@ -1743,14 +1786,14 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "mobile",
-                "security_code"
+                "securityCode"
             ],
             "properties": {
                 "mobile": {
                     "description": "新手机号",
                     "type": "string"
                 },
-                "security_code": {
+                "securityCode": {
                     "description": "安全码",
                     "type": "string"
                 }
@@ -1760,14 +1803,14 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "password",
-                "security_code"
+                "securityCode"
             ],
             "properties": {
                 "password": {
                     "description": "新密码",
                     "type": "string"
                 },
-                "security_code": {
+                "securityCode": {
                     "description": "安全码",
                     "type": "string"
                 }
@@ -1795,20 +1838,20 @@ const docTemplate = `{
         "audit.LastLoginDetailRequest": {
             "type": "object",
             "required": [
-                "device_id",
-                "device_name",
-                "user_agent"
+                "deviceId",
+                "deviceName",
+                "userAgent"
             ],
             "properties": {
-                "device_id": {
+                "deviceId": {
                     "description": "设备id",
                     "type": "string"
                 },
-                "device_name": {
+                "deviceName": {
                     "description": "设备名称",
                     "type": "string"
                 },
-                "user_agent": {
+                "userAgent": {
                     "description": "用户客户端",
                     "type": "string"
                 }
@@ -1817,15 +1860,15 @@ const docTemplate = `{
         "bindaccount.request": {
             "type": "object",
             "required": [
-                "account_id",
-                "role_id"
+                "accountId",
+                "roleId"
             ],
             "properties": {
-                "account_id": {
+                "accountId": {
                     "description": "账户id",
                     "type": "integer"
                 },
-                "role_id": {
+                "roleId": {
                     "description": "角色id",
                     "type": "integer"
                 }
@@ -1904,15 +1947,15 @@ const docTemplate = `{
         "channal.Channal": {
             "type": "object",
             "properties": {
-                "account_id": {
+                "accountId": {
                     "description": "账户Id",
                     "type": "integer"
                 },
-                "api_key": {
+                "apiKey": {
                     "description": "ApiKey",
                     "type": "string"
                 },
-                "created_at": {
+                "createdAt": {
                     "description": "创建时间",
                     "type": "integer"
                 },
@@ -1927,7 +1970,7 @@ const docTemplate = `{
                 "limiter": {
                     "description": "限速器"
                 },
-                "limiter_type": {
+                "limiterType": {
                     "description": "限速器类型",
                     "type": "string"
                 },
@@ -1938,7 +1981,7 @@ const docTemplate = `{
                 "provider": {
                     "description": "供应商"
                 },
-                "provider_type": {
+                "providerType": {
                     "description": "供应商类型",
                     "type": "string"
                 },
@@ -1954,7 +1997,7 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "updated_at": {
+                "updatedAt": {
                     "description": "更新时间",
                     "type": "integer"
                 }
@@ -1981,7 +2024,7 @@ const docTemplate = `{
             "required": [
                 "name",
                 "provider",
-                "provider_type"
+                "providerType"
             ],
             "properties": {
                 "description": {
@@ -1992,7 +2035,7 @@ const docTemplate = `{
                     "description": "限速器\nsliding_window: {\"window\":0, \"limit\":0}\ntoken_bucket: {\"capacity\":0, \"rate\":0}",
                     "type": "string"
                 },
-                "limiter_type": {
+                "limiterType": {
                     "description": "限速器类型",
                     "type": "string",
                     "enum": [
@@ -2008,7 +2051,7 @@ const docTemplate = `{
                     "description": "供应商\nemail: {\"from\":\"\", \"smtp_server\":\"\", \"smtp_port\":0, \"smtp_username\":\"\", \"smtp_password\":\"\"}\ndingtalk: {\"webhook\":\"\", \"secret\":\"\"}\nlark: {\"webhook\":\"\", \"secret\":\"\"}\ntelegram: {\"token\":\"\", \"chat_id\":\"\"}",
                     "type": "string"
                 },
-                "provider_type": {
+                "providerType": {
                     "description": "供应商类型",
                     "type": "string",
                     "enum": [
@@ -2027,7 +2070,7 @@ const docTemplate = `{
         "channal.CreateResponse": {
             "type": "object",
             "properties": {
-                "api_key": {
+                "apiKey": {
                     "type": "string"
                 },
                 "secret": {
@@ -2062,17 +2105,17 @@ const docTemplate = `{
         "device.BindRequest": {
             "type": "object",
             "required": [
-                "account_id",
-                "device_id",
+                "accountId",
+                "deviceId",
                 "name",
                 "type"
             ],
             "properties": {
-                "account_id": {
+                "accountId": {
                     "description": "账户id",
                     "type": "string"
                 },
-                "device_id": {
+                "deviceId": {
                     "description": "设备id",
                     "type": "string"
                 },
@@ -2089,17 +2132,17 @@ const docTemplate = `{
         "device.ChangeRequest": {
             "type": "object",
             "required": [
-                "account_id",
-                "device_id",
+                "accountId",
+                "deviceId",
                 "name",
                 "type"
             ],
             "properties": {
-                "account_id": {
+                "accountId": {
                     "description": "账户id",
                     "type": "string"
                 },
-                "device_id": {
+                "deviceId": {
                     "description": "设备id",
                     "type": "string"
                 },
@@ -2116,15 +2159,15 @@ const docTemplate = `{
         "device.UnbindRequest": {
             "type": "object",
             "required": [
-                "account_id",
-                "device_id"
+                "accountId",
+                "deviceId"
             ],
             "properties": {
-                "account_id": {
+                "accountId": {
                     "description": "账户id",
                     "type": "string"
                 },
-                "device_id": {
+                "deviceId": {
                     "description": "设备id",
                     "type": "string"
                 }
@@ -2133,7 +2176,7 @@ const docTemplate = `{
         "google.GenerateResponse": {
             "type": "object",
             "properties": {
-                "qr_code": {
+                "qrCode": {
                     "description": "二维码base64",
                     "type": "string"
                 },
@@ -2162,7 +2205,7 @@ const docTemplate = `{
                     "description": "是否验证通过",
                     "type": "boolean"
                 },
-                "security_code": {
+                "securityCode": {
                     "description": "安全码",
                     "type": "string"
                 }
@@ -2171,11 +2214,11 @@ const docTemplate = `{
         "jwt.Jwt": {
             "type": "object",
             "properties": {
-                "access_token": {
+                "accessToken": {
                     "description": "访问令牌",
                     "type": "string"
                 },
-                "refresh_token": {
+                "refreshToken": {
                     "description": "刷新令牌",
                     "type": "string"
                 }
@@ -2213,10 +2256,10 @@ const docTemplate = `{
         "jwt.LogoutRequest": {
             "type": "object",
             "required": [
-                "refresh_token"
+                "refreshToken"
             ],
             "properties": {
-                "refresh_token": {
+                "refreshToken": {
                     "description": "刷新令牌",
                     "type": "string"
                 }
@@ -2225,10 +2268,10 @@ const docTemplate = `{
         "jwt.RefreshRequest": {
             "type": "object",
             "required": [
-                "refresh_token"
+                "refreshToken"
             ],
             "properties": {
-                "refresh_token": {
+                "refreshToken": {
                     "description": "刷新令牌",
                     "type": "string"
                 }
@@ -2240,7 +2283,7 @@ const docTemplate = `{
                 "component",
                 "icon",
                 "name",
-                "parent_id",
+                "parentId",
                 "router",
                 "status",
                 "title",
@@ -2251,7 +2294,7 @@ const docTemplate = `{
                     "description": "路由路径",
                     "type": "string"
                 },
-                "hide_menu": {
+                "hideMenu": {
                     "description": "隐藏菜单",
                     "type": "boolean"
                 },
@@ -2263,7 +2306,7 @@ const docTemplate = `{
                     "description": "菜单图标",
                     "type": "string"
                 },
-                "keeper_alive": {
+                "keeperAlive": {
                     "description": "缓存菜单",
                     "type": "boolean"
                 },
@@ -2275,7 +2318,7 @@ const docTemplate = `{
                     "description": "菜单排序",
                     "type": "integer"
                 },
-                "parent_id": {
+                "parentId": {
                     "description": "父级菜单id",
                     "type": "integer"
                 },
@@ -2304,7 +2347,7 @@ const docTemplate = `{
                     "description": "正文",
                     "type": "string"
                 },
-                "encrypted_content": {
+                "encryptedContent": {
                     "description": "加密正文, 仅在账户控制台可查看",
                     "type": "string"
                 },
@@ -2353,7 +2396,7 @@ const docTemplate = `{
                     "description": "消息内容",
                     "type": "string"
                 },
-                "encrypted_content": {
+                "encryptedContent": {
                     "description": "加密消息内容, 仅在账户控制台可查看",
                     "type": "string"
                 },
@@ -2383,11 +2426,7 @@ const docTemplate = `{
         "message.Message": {
             "type": "object",
             "properties": {
-                "_id": {
-                    "description": "消息Id",
-                    "type": "string"
-                },
-                "account_id": {
+                "accountId": {
                     "description": "账户Id",
                     "type": "integer"
                 },
@@ -2399,13 +2438,17 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "channel_api_key": {
+                "channalApiKey": {
                     "description": "通道ApiKey",
                     "type": "string"
                 },
-                "created_at": {
+                "createdAt": {
                     "description": "创建时间",
                     "type": "integer"
+                },
+                "id": {
+                    "description": "消息Id",
+                    "type": "string"
                 },
                 "payload": {
                     "description": "附加信息",
@@ -2415,7 +2458,7 @@ const docTemplate = `{
                     "description": "状态",
                     "type": "string"
                 },
-                "updated_at": {
+                "updatedAt": {
                     "description": "更新时间",
                     "type": "integer"
                 }
@@ -2434,6 +2477,18 @@ const docTemplate = `{
                 "total": {
                     "description": "总数",
                     "type": "integer"
+                }
+            }
+        },
+        "role.FindRouteByRolesResponse": {
+            "type": "object",
+            "properties": {
+                "routes": {
+                    "description": "路由列表",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -2461,12 +2516,49 @@ const docTemplate = `{
                     "maxLength": 24
                 },
                 "status": {
-                    "description": "状态",
+                    "description": "状态 1:启用 2:禁用",
                     "type": "integer",
                     "enum": [
                         1,
                         2
                     ]
+                }
+            }
+        },
+        "role.Role": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "角色编码",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "integer"
+                },
+                "deletedAt": {
+                    "description": "删除时间",
+                    "type": "integer"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "自增主键",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态",
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "integer"
                 }
             }
         }

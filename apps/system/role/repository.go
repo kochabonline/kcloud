@@ -38,3 +38,12 @@ func (repo *Repository) FindAll(ctx context.Context, req *FindAllRequest) (*Role
 
 	return &roles, nil
 }
+
+func (repo *Repository) FindByRoles(ctx context.Context, roles []string) ([]*Role, error) {
+	var rs []*Role
+	if err := repo.db.WithContext(ctx).Where("name IN ?", roles).Find(&rs).Error; err != nil {
+		return nil, err
+	}
+
+	return rs, nil
+}
