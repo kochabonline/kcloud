@@ -104,9 +104,9 @@ func (m *Migrate) initRole() {
 			Meta: common.Meta{
 				CreatedAt: now,
 			},
-			Name:        common.RoleNormal,
-			Code:        "R_NORMAL",
-			Description: "普通账户",
+			Name:        common.RoleSuperAdmin,
+			Code:        "R_SUPER",
+			Description: "超级管理员账户",
 			Status:      int(common.StatusNormal),
 		},
 		{
@@ -119,12 +119,13 @@ func (m *Migrate) initRole() {
 			Status:      int(common.StatusNormal),
 		},
 		{
+
 			Meta: common.Meta{
 				CreatedAt: now,
 			},
-			Name:        common.RoleSuperAdmin,
-			Code:        "R_SUPER",
-			Description: "超级管理员账户",
+			Name:        common.RoleNormal,
+			Code:        "R_NORMAL",
+			Description: "普通账户",
 			Status:      int(common.StatusNormal),
 		},
 	}
