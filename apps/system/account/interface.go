@@ -74,9 +74,9 @@ type FindAllRequest struct {
 // 用户列表查询响应
 type Accounts struct {
 	// 总数
-	Total int64
+	Total int64 `json:"total"`
 	// 用户列表
-	Items []*Account
+	Items []*Account `json:"items"`
 }
 
 // 删除用户请求

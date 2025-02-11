@@ -70,9 +70,9 @@ type FindAllRequest struct {
 // 通道列表响应
 type Channels struct {
 	// 总数
-	Total int64 `label:"总数"`
+	Total int64 `json:"total"`
 	// 通道列表
-	Items []*Channal `label:"通道列表"`
+	Items []*Channal `json:"items"`
 }
 
 // 删除通道请求

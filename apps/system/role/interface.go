@@ -42,7 +42,7 @@ type FindAllRequest struct {
 
 type Roles struct {
 	// 总数
-	Total int64 `json:"description"`
+	Total int64 `json:"total"`
 	// 角色列表
 	Items []*Role `json:"items"`
 }
